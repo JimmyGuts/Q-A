@@ -11,7 +11,7 @@ configure({
 });
 // End here
 
-test(`Should contain the title 'Hello, World'`, () => {
+test(`Should contain the title 'QUESTIONS & ANSWERS'`, () => {
   const wrapper = shallow(<App />);
-  expect(wrapper.find("#title").text()).toBe("Hello, World");
+  expect(wrapper.find("#title").text()).toBe("QUESTIONS & ANSWERS");
 });
