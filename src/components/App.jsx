@@ -27,7 +27,7 @@ const App = () => {
     <Grid container spacing={5} className={classes.grid}>
       <span id="title">QUESTIONS & ANSWERS</span>
       <Grid container item xs={12} spacing={2} className={classes.grid}>
-        <Grid item xs={12}>
+        <Grid id="searchBar" item xs={12}>
           <SearchBar />
         </Grid>
         <Grid container item xs={9} direction="column">
@@ -36,11 +36,11 @@ const App = () => {
           </Paper>
         </Grid>
         <Grid container item xs={3} justify={"space-evenly"}>
-          <Grid item>
+          <Grid id="helpfulQuestion" item>
             Helpful? <span>Yes</span> (2)
           </Grid>
           <Grid item>|</Grid>
-          <Link href="#" color="inherit">
+          <Link id="AddAnswer" href="#" color="inherit">
             Add Answer
           </Link>
         </Grid>
@@ -50,7 +50,7 @@ const App = () => {
               MORE ANSWERED QUESTIONS
             </Button>
           </Grid>
-          <Grid item xs={4}>
+          <Grid id="addQuestion" item xs={4}>
             <AddQuestion />
           </Grid>
         </Grid>
