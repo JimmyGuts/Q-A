@@ -1,12 +1,14 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Paper } from "@material-ui/core";
+import { Grid, Paper, Button, Link } from "@material-ui/core";
+import SearchBar from "./SearchBar.jsx";
+import AddQuestion from "./AddQuestion.jsx";
 
 const useStyles = makeStyles((theme) => ({
   grid: {
     width: "100%",
     margin: "0px",
-    background: "lightgrey",
+    background: "#F1F1F1",
     direction: "column",
     justify: "space-evenly",
     alignItems: "stretch",
@@ -26,20 +28,29 @@ const App = () => {
       <span id="title">QUESTIONS & ANSWERS</span>
       <Grid container item xs={12} spacing={2} className={classes.grid}>
         <Grid item xs={12}>
-          <Paper className={classes.paper}>
-            HAVE A QUESTION? SEARCH FOR ANSWERS...
-          </Paper>
+          <SearchBar />
         </Grid>
         <Grid item xs={9}>
           <Paper className={classes.paper}>Q&A MESSAGES</Paper>
         </Grid>
-        <Grid item xs={3}>
-          <Paper className={classes.paper}>HELPFUL? ADD ANSWER</Paper>
+        <Grid container item xs={3} justify={"space-evenly"}>
+          <Grid item>
+            Helpful <span>Yes</span> (2)
+          </Grid>
+          <Grid item>|</Grid>
+          <Link href="#" color="inherit">
+            Add Answer
+          </Link>
         </Grid>
-        <Grid item xs={9}>
-          <Paper className={classes.paper}>
-            MORE ANSWERED QUESTIONS ADD A QUESTION
-          </Paper>
+        <Grid container item xs={9}>
+          <Grid item xs={4}>
+            <Button variant="outlined" className={classes.button}>
+              MORE ANSWERED QUESTIONS
+            </Button>
+          </Grid>
+          <Grid item xs={4}>
+            <AddQuestion />
+          </Grid>
         </Grid>
       </Grid>
     </Grid>
