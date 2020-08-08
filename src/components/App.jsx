@@ -22,7 +22,8 @@ const useStyles = makeStyles((theme) => ({
 const App = () => {
   const classes = useStyles();
   return (
-    <Grid container spacing={5} className={classes.grid}>QUESTIONS & ANSWERS
+    <Grid container spacing={5} className={classes.grid}>
+      <span id="title">QUESTIONS & ANSWERS</span>
       <Grid container item xs={12} spacing={2} className={classes.grid}>
         <Grid item xs={12}>
           <Paper className={classes.paper}>
