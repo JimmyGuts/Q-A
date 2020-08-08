@@ -30,12 +30,14 @@ const App = () => {
         <Grid item xs={12}>
           <SearchBar />
         </Grid>
-        <Grid item xs={9}>
-          <Paper className={classes.paper}>Q&A MESSAGES</Paper>
+        <Grid container item xs={9} direction="column">
+          <Paper item className={classes.paper}>
+            Questions and Answers Section
+          </Paper>
         </Grid>
         <Grid container item xs={3} justify={"space-evenly"}>
           <Grid item>
-            Helpful <span>Yes</span> (2)
+            Helpful? <span>Yes</span> (2)
           </Grid>
           <Grid item>|</Grid>
           <Link href="#" color="inherit">
