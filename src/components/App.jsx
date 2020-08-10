@@ -4,6 +4,7 @@ import { Grid, Paper, Button, Link } from "@material-ui/core";
 import SearchBar from "./SearchBar.jsx";
 import AddQuestion from "./AddQuestion.jsx";
 import MainQAList from "./MainQAList.jsx";
+import Helpful from "./Helpful.jsx";
 
 const useStyles = makeStyles((theme) => ({
   grid: {
@@ -38,7 +39,7 @@ const App = () => {
         </Grid>
         <Grid container item xs={3} justify={"space-evenly"}>
           <Grid id="helpfulQuestion" item>
-            Helpful? <span>Yes</span> (2)
+            <Helpful storedCount={5}/>
           </Grid>
           <Grid item>|</Grid>
           <Link id="AddAnswer" href="#" color="inherit">
