@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Paper, Button, Link } from "@material-ui/core";
 import SearchBar from "./SearchBar.jsx";
 import AddQuestion from "./AddQuestion.jsx";
+import MainQAList from "./MainQAList.jsx";
 
 const useStyles = makeStyles((theme) => ({
   grid: {
@@ -17,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     textAlign: "center",
     color: theme.palette.text.secondary,
-    background: theme.palette.success.light,
+    background: "FFF",
   },
 }));
 
@@ -32,7 +33,7 @@ const App = () => {
         </Grid>
         <Grid container item xs={9} direction="column">
           <Paper item className={classes.paper}>
-            Questions and Answers Section
+            <MainQAList />
           </Paper>
         </Grid>
         <Grid container item xs={3} justify={"space-evenly"}>
