@@ -39,7 +39,7 @@ const App = () => {
         </Grid>
         <Grid container item xs={3} justify={"space-evenly"}>
           <Grid id="helpfulQuestion" item>
-            <Helpful />
+            <Helpful storedCount={5}/>
           </Grid>
           <Grid item>|</Grid>
           <Link id="AddAnswer" href="#" color="inherit">

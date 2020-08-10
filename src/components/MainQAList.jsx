@@ -68,7 +68,7 @@ const Answers = () => {
             by {username} {date}
           </Typography>
           <Typography>. | .</Typography>
-          <Helpful />
+          <Helpful storedCount={3} />
           <Typography>. | .</Typography>
           <Typography>Report</Typography>
         </Grid>

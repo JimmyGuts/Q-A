@@ -1,11 +1,10 @@
 import App from "../src/components/App";
 
-// Create a file with the following lines of code and import into all test files
+// Use the following lines in each test file
 // Start here
 import React from "react";
 import { configure, shallow } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-
 configure({
   adapter: new Adapter(),
 });
