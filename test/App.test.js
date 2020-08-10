@@ -11,7 +11,22 @@ configure({
 });
 // End here
 
-test(`Should contain the title 'QUESTIONS & ANSWERS'`, () => {
-  const wrapper = shallow(<App />);
-  expect(wrapper.find("#title").text()).toBe("QUESTIONS & ANSWERS");
+describe("Basic Rendering", () => {
+  let wrapper;
+
+  beforeEach(() => {
+    wrapper = shallow(<App />);
+  });
+
+  test(`Should contain title Question & Answers'`, () => {
+    expect(wrapper.find("#title").text()).toBe("QUESTIONS & ANSWERS");
+  });
+
+  test(`Should contain a Search Bar component`, () => {
+    expect(wrapper.exists("#searchBar")).toBe(true);
+  });
+
+  test("Should contain a Add Question component", () => {
+    expect(wrapper.exists("#addQuestion")).toBe(true);
+  });
 });

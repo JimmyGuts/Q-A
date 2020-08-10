@@ -1,5 +1,4 @@
 const path = require("path");
-import css from "../styles.css";
 
 const DIST_DIR = path.resolve(__dirname, "public");
 const SRC_DIR = path.resolve(__dirname, "src");
@@ -19,14 +18,6 @@ module.exports = {
         query: {
           presets: ["@babel/preset-react", "@babel/preset-env"],
         },
-      },
-    ],
-  },
-  module: {
-    rules: [
-      {
-        test: /\.css$/i,
-        use: ["style-loader", "css-loader"],
       },
     ],
   },

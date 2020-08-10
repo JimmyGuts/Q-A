@@ -1,12 +1,15 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Paper } from "@material-ui/core";
+import { Grid, Paper, Button, Link } from "@material-ui/core";
+import SearchBar from "./SearchBar.jsx";
+import AddQuestion from "./AddQuestion.jsx";
+import MainQAList from "./MainQAList.jsx";
 
 const useStyles = makeStyles((theme) => ({
   grid: {
     width: "100%",
     margin: "0px",
-    background: "lightgrey",
+    background: "#F1F1F1",
     direction: "column",
     justify: "space-evenly",
     alignItems: "stretch",
@@ -15,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     textAlign: "center",
     color: theme.palette.text.secondary,
-    background: theme.palette.success.light,
+    background: "FFF",
   },
 }));
 
@@ -25,21 +28,32 @@ const App = () => {
     <Grid container spacing={5} className={classes.grid}>
       <span id="title">QUESTIONS & ANSWERS</span>
       <Grid container item xs={12} spacing={2} className={classes.grid}>
-        <Grid item xs={12}>
-          <Paper className={classes.paper}>
-            HAVE A QUESTION? SEARCH FOR ANSWERS...
+        <Grid id="searchBar" item xs={12}>
+          <SearchBar />
+        </Grid>
+        <Grid container item xs={9} direction="column">
+          <Paper item className={classes.paper}>
+            <MainQAList />
           </Paper>
         </Grid>
-        <Grid item xs={9}>
-          <Paper className={classes.paper}>Q&A MESSAGES</Paper>
+        <Grid container item xs={3} justify={"space-evenly"}>
+          <Grid id="helpfulQuestion" item>
+            Helpful? <span>Yes</span> (2)
+          </Grid>
+          <Grid item>|</Grid>
+          <Link id="AddAnswer" href="#" color="inherit">
+            Add Answer
+          </Link>
         </Grid>
-        <Grid item xs={3}>
-          <Paper className={classes.paper}>HELPFUL? ADD ANSWER</Paper>
-        </Grid>
-        <Grid item xs={9}>
-          <Paper className={classes.paper}>
-            MORE ANSWERED QUESTIONS ADD A QUESTION
-          </Paper>
+        <Grid container item xs={9}>
+          <Grid item xs={4}>
+            <Button variant="outlined" className={classes.button}>
+              MORE ANSWERED QUESTIONS
+            </Button>
+          </Grid>
+          <Grid id="addQuestion" item xs={4}>
+            <AddQuestion />
+          </Grid>
         </Grid>
       </Grid>
     </Grid>
