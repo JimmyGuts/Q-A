@@ -9,7 +9,10 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   helpfulStyles: {
-    color: "purple",
+    color: "inherit",
+  },
+  linkStyles: {
+    color: "inherit",
   },
 }));
 
@@ -37,13 +40,25 @@ const Helpful = ({ storedCount }) => {
 
   return (
     <Grid container xs={12} className={classes.helpfulStyles}>
-      <Typography>
-        Helpful?
-        <Link href="#" className={"helpfulClick"} onClick={isHelpful}>
-          Yes
-        </Link>
-        <span className={`clicks-${count}`}>({count})</span>
-      </Typography>
+      <Grid item xs={8}>
+        <Typography>Helpful?</Typography>
+      </Grid>
+
+      <Grid item xs={3}>
+        <Typography>
+          <Link
+            href="#"
+            className={("helpfulClick", classes.linkStyles)}
+            onClick={isHelpful}
+          >
+            Yes
+          </Link>
+        </Typography>
+      </Grid>
+
+      <Grid item xs={1}>
+        <Typography className={`clicks-${count}`}>({count})</Typography>
+      </Grid>
     </Grid>
   );
 };

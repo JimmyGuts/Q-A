@@ -2,6 +2,7 @@ import React from "react";
 import { Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Helpful from "./Helpful.jsx";
+import sampleData from "../sampleQuestion";
 
 const useStyles = makeStyles((theme) => ({
   questionStyles: {
@@ -14,9 +15,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// Component for the Q&A List section
 const MainQAList = () => {
   const classes = useStyles();
 
+  console.log(sampleData);
   return (
     <Grid container>
       <Grid container>
@@ -30,6 +33,7 @@ const MainQAList = () => {
   );
 };
 
+// Component for the Questions
 const Question = () => {
   const classes = useStyles();
   return (
@@ -47,6 +51,7 @@ const Question = () => {
   );
 };
 
+// Component for the Answers
 const Answers = () => {
   const classes = useStyles();
   const username = "User1234";
@@ -63,14 +68,24 @@ const Answers = () => {
           deserunt. Lorem ipsum dolor sit amet consectetur adipisicing elit.
           Nam, deserunt.
         </Typography>
-        <Grid container item>
-          <Typography>
-            by {username} {date}
-          </Typography>
-          <Typography>. | .</Typography>
-          <Helpful storedCount={3} />
-          <Typography>. | .</Typography>
-          <Typography>Report</Typography>
+        <Grid container item spacing={2}>
+          <Grid item>
+            <Typography>
+              by {username} {date}
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Typography>|</Typography>
+          </Grid>
+          <Grid item>
+            <Helpful storedCount={3} />
+          </Grid>
+          <Grid item>
+            <Typography>|</Typography>
+          </Grid>
+          <Grid item>
+            <Typography>Report</Typography>
+          </Grid>
         </Grid>
       </Grid>
     </Grid>

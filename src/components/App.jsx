@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Paper, Button, Link } from "@material-ui/core";
+import { Grid, Paper, Button, Link, Typography } from "@material-ui/core";
 import SearchBar from "./SearchBar.jsx";
 import AddQuestion from "./AddQuestion.jsx";
 import MainQAList from "./MainQAList.jsx";
@@ -39,9 +39,11 @@ const App = () => {
         </Grid>
         <Grid container item xs={3} justify={"space-evenly"}>
           <Grid id="helpfulQuestion" item>
-            <Helpful storedCount={5}/>
+            <Helpful storedCount={5} />
           </Grid>
-          <Grid item>|</Grid>
+          <Grid item>
+            <Typography>|</Typography>
+          </Grid>
           <Link id="AddAnswer" href="#" color="inherit">
             Add Answer
           </Link>
