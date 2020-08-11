@@ -41,11 +41,11 @@ const Helpful = ({ storedCount }) => {
   return (
     <Grid container xs={12} className={classes.helpfulStyles}>
       <Grid item xs={8}>
-        <Typography>Helpful?</Typography>
+        <Typography variant="caption">Helpful?</Typography>
       </Grid>
 
       <Grid item xs={3}>
-        <Typography>
+        <Typography variant="caption">
           <Link
             href="#"
             className={("helpfulClick", classes.linkStyles)}
@@ -57,7 +57,9 @@ const Helpful = ({ storedCount }) => {
       </Grid>
 
       <Grid item xs={1}>
-        <Typography className={`clicks-${count}`}>({count})</Typography>
+        <Typography variant="caption" className={`clicks-${count}`}>
+          ({count})
+        </Typography>
       </Grid>
     </Grid>
   );
