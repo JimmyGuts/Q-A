@@ -1,77 +1,121 @@
 import React from "react";
-import { Grid, Typography } from "@material-ui/core";
+import { Grid, Typography, Link, Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Helpful from "./Helpful.jsx";
+import moment from "moment";
 
+// Styles for the Q&A section
 const useStyles = makeStyles((theme) => ({
   questionStyles: {
     textAlign: "left",
-    color: "red",
+    color: "#101010",
   },
   answerStyles: {
     textAlign: "left",
-    color: "blue",
+    color: "#777",
   },
 }));
 
-const MainQAList = () => {
+// Main Component for the Q&A List section
+const MainQAList = ({ data }) => {
   const classes = useStyles();
 
-  return (
-    <Grid container>
-      <Grid container>
-        <Question />
-      </Grid>
+  const questionList = data.results.map((question) => {
+    return Question(question);
+  });
 
-      <Grid container alignItems="flex-start">
-        <Answers />
-      </Grid>
-    </Grid>
-  );
+  return <Box className="main">{questionList}</Box>;
 };
 
-const Question = () => {
+// Component for the Questions
+const Question = (question) => {
   const classes = useStyles();
-  return (
-    <Grid container className={classes.questionStyles}>
-      <Grid item xs={1}>
-        <Typography>Q:</Typography>
-      </Grid>
-      <Grid item xs={11}>
-        <Typography>
-          Who What Which When where why whether how? Who What Which When where
-          why whether how? Who What Which When where why whether how?
-        </Typography>
-      </Grid>
-    </Grid>
-  );
-};
 
-const Answers = () => {
-  const classes = useStyles();
-  const username = "User1234";
-  const date = "January 1, 2019";
+  const answerList = Object.values(question.answers).map((answer) => {
+    return Answers(answer);
+  });
 
   return (
-    <Grid container className={classes.answerStyles}>
-      <Grid item xs={1}>
-        <Typography>A:</Typography>
-      </Grid>
-      <Grid item xs={11}>
-        <Typography>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam,
-          deserunt. Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Nam, deserunt.
-        </Typography>
-        <Grid container item>
-          <Typography>
-            by {username} {date}
+    <Grid key={question.question_id} container>
+      <Grid container item xs={9}>
+        <Box mr={3}>
+          <Typography>Q:</Typography>
+        </Box>
+
+        <Box>
+          <Typography className="questionBody">
+            {question.question_body}
           </Typography>
-          <Typography>. | .</Typography>
-          <Helpful storedCount={3} />
-          <Typography>. | .</Typography>
-          <Typography>Report</Typography>
-        </Grid>
+        </Box>
+      </Grid>
+
+      <Grid container item xs={3}>
+        <Box mx={1}>
+          <Helpful storedCount={5} />
+        </Box>
+        <Box mx={1}>
+          <Typography>|</Typography>
+        </Box>
+        <Box mx={1}>
+          <Link id="AddAnswer" href="#" color="inherit">
+            <Typography variant="caption">Add Answer</Typography>
+          </Link>
+        </Box>
+      </Grid>
+
+      <Grid container item xs={12}>
+        <Typography>{answerList}</Typography>
+      </Grid>
+    </Grid>
+  );
+};
+
+// Component for the Answers
+const Answers = (answer) => {
+  const classes = useStyles();
+
+  return (
+    <Grid container key={answer.id} className={classes.answerStyles}>
+      <Box mr={3}>
+        <Typography>A:</Typography>
+      </Box>
+      <Box>
+        <Typography className="answerBody">{answer.body}</Typography>
+      </Box>
+
+      <Grid container item>
+        <Box ml={5}>
+          <Typography variant="caption" className="answerName">
+            by {answer.answerer_name}, {moment(answer.date).format("LL")}
+          </Typography>
+        </Box>
+
+        <Box mx={2}>
+          <Typography variant="caption">|</Typography>
+        </Box>
+
+        <Box mx={1}>
+          <Helpful storedCount={answer.helpfulness} />
+        </Box>
+
+        <Box mx={2}>
+          <Typography variant="caption">|</Typography>
+        </Box>
+
+        <Box mx={1}>
+          <Typography variant="caption">
+            <Link
+              className="reported"
+              href="#"
+              color="inherit"
+              onClick={() => {
+                alert("Reported!!!");
+              }}
+            >
+              Report
+            </Link>
+          </Typography>
+        </Box>
       </Grid>
     </Grid>
   );
