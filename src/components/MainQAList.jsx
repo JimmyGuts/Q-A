@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// Component for the Q&A List section
+// Main Component for the Q&A List section
 const MainQAList = ({ data }) => {
   const classes = useStyles();
 
@@ -24,7 +24,7 @@ const MainQAList = ({ data }) => {
     return Question(question);
   });
 
-  return <Box>{questionList}</Box>;
+  return <Box className="main">{questionList}</Box>;
 };
 
 // Component for the Questions
@@ -36,18 +36,20 @@ const Question = (question) => {
   });
 
   return (
-    <Grid container>
-      <Grid container xs={9}>
+    <Grid key={question.question_id} container>
+      <Grid container item xs={9}>
         <Box mr={3}>
           <Typography>Q:</Typography>
         </Box>
 
         <Box>
-          <Typography>{question.question_body}</Typography>
+          <Typography className="questionBody">
+            {question.question_body}
+          </Typography>
         </Box>
       </Grid>
 
-      <Grid container xs={3}>
+      <Grid container item xs={3}>
         <Box mx={1}>
           <Helpful storedCount={5} />
         </Box>
@@ -73,32 +75,37 @@ const Answers = (answer) => {
   const classes = useStyles();
 
   return (
-    <Grid container key={answer.id} className={classes.answerStyles} xs={12}>
+    <Grid container key={answer.id} className={classes.answerStyles}>
       <Box mr={3}>
         <Typography>A:</Typography>
       </Box>
       <Box>
-        <Typography>{answer.body}</Typography>
+        <Typography className="answerBody">{answer.body}</Typography>
       </Box>
 
       <Grid container item>
         <Box ml={5}>
-          <Typography variant="caption">
+          <Typography variant="caption" className="answerName">
             by {answer.answerer_name}, {moment(answer.date).format("LL")}
           </Typography>
         </Box>
+
         <Box mx={2}>
           <Typography variant="caption">|</Typography>
         </Box>
+
         <Box mx={1}>
           <Helpful storedCount={answer.helpfulness} />
         </Box>
+
         <Box mx={2}>
           <Typography variant="caption">|</Typography>
         </Box>
+
         <Box mx={1}>
           <Typography variant="caption">
             <Link
+              className="reported"
               href="#"
               color="inherit"
               onClick={() => {

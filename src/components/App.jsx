@@ -32,8 +32,8 @@ const App = () => {
       </Grid>
 
       <Grid container item xs={12} className={classes.grid}>
-        <Grid item id="searchBar" xs={12}>
-          <SearchBar />
+        <Grid item xs={12}>
+          <SearchBar id="searchBar" />
         </Grid>
       </Grid>
 
@@ -43,13 +43,17 @@ const App = () => {
 
       <Grid container item>
         <Box mx={1} mt={2}>
-          <Button variant="outlined" className={classes.button}>
+          <Button
+            id="moreQuestions"
+            variant="outlined"
+            className={classes.button}
+          >
             <Typography variant="button">MORE ANSWERED QUESTIONS</Typography>
           </Button>
         </Box>
 
         <Box mx={1} mt={2}>
-          <AddQuestion />
+          <AddQuestion id="addQuestion" />
         </Box>
       </Grid>
     </Grid>

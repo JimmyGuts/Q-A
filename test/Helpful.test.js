@@ -1,5 +1,4 @@
 import Helpful from "../src/components/Helpful";
-import { Link } from "@material-ui/core";
 
 import React from "react";
 import { configure, shallow } from "enzyme";
@@ -17,14 +16,14 @@ describe("Helpful Component Tests", () => {
 
   test("Should increment Helpful Count when clicked", () => {
     expect(wrapper.exists(".clicks-5")).toBe(true);
-    wrapper.find(".helpfulClick").simulate("click");
+    wrapper.find("#helpfulClick").simulate("click");
     expect(wrapper.exists(".clicks-6")).toBe(true);
   });
 
   test("Should return Helpful count to original value when clicked twice", () => {
-    wrapper.find(".helpfulClick").simulate("click");
+    wrapper.find("#helpfulClick").simulate("click");
     expect(wrapper.exists(".clicks-6")).toBe(true);
-    wrapper.find(".helpfulClick").simulate("click");
+    wrapper.find("#helpfulClick").simulate("click");
     expect(wrapper.exists(".clicks-5")).toBe(true);
   });
-});
+}); 

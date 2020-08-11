@@ -25,6 +25,10 @@ describe("Basic Rendering", () => {
     expect(wrapper.exists("#searchBar")).toBe(true);
   });
 
+  test("Should contain a More Answered Question button", () => {
+    expect(wrapper.exists("#moreQuestions")).toBe(true);
+  });
+
   test("Should contain a Add Question component", () => {
     expect(wrapper.exists("#addQuestion")).toBe(true);
   });

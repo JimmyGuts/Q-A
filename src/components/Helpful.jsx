@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Grid, Typography, Link } from "@material-ui/core";
+import { Grid, Typography, Link, Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 // *** Helpful ***
@@ -39,28 +39,29 @@ const Helpful = ({ storedCount }) => {
   };
 
   return (
-    <Grid container xs={12} className={classes.helpfulStyles}>
-      <Grid item xs={8}>
+    <Grid container className={classes.helpfulStyles}>
+      <Box>
         <Typography variant="caption">Helpful?</Typography>
-      </Grid>
+      </Box>
 
-      <Grid item xs={3}>
+      <Box mx={1}>
         <Typography variant="caption">
           <Link
             href="#"
-            className={("helpfulClick", classes.linkStyles)}
+            id="helpfulClick"
+            className={classes.linkStyles}
             onClick={isHelpful}
           >
             Yes
           </Link>
         </Typography>
-      </Grid>
+      </Box>
 
-      <Grid item xs={1}>
+      <Box>
         <Typography variant="caption" className={`clicks-${count}`}>
           ({count})
         </Typography>
-      </Grid>
+      </Box>
     </Grid>
   );
 };
