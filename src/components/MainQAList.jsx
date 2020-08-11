@@ -4,6 +4,7 @@ import { Grid, Typography, Link, Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Helpful from "./Helpful.jsx";
 import Report from "./Report.jsx";
+import AddAnswer from "./AddAnswer.jsx";
 
 // Styles for the Q&A section
 const useStyles = makeStyles((theme) => ({
@@ -58,9 +59,7 @@ const Question = (question) => {
           <Typography>|</Typography>
         </Box>
         <Box mx={1}>
-          <Link id="AddAnswer" href="#" color="inherit">
-            <Typography variant="caption">Add Answer</Typography>
-          </Link>
+          <AddAnswer />
         </Box>
       </Grid>
 
