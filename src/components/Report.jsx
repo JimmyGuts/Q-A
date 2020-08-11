@@ -7,7 +7,7 @@ import { makeStyles, Typography, Link } from "@material-ui/core";
 // - (TODO)should send Put request to update api
 
 const useStyles = makeStyles((theme) => ({
-  Reported: {
+  reported: {
     color: "red",
   },
   notReported: {
@@ -24,7 +24,8 @@ const Report = () => {
   return (
     <Typography variant="caption">
       <Link
-        className={isReported ? classes.Reported : classes.notReported}
+        id="report"
+        className={isReported ? classes.reported : classes.notReported}
         href="#"
         onClick={() => {
           setReported((prevReport) => !prevReport);

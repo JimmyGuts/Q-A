@@ -26,4 +26,4 @@ describe("Helpful Component Tests", () => {
     wrapper.find("#helpfulClick").simulate("click");
     expect(wrapper.exists(".clicks-5")).toBe(true);
   });
-}); 
+});

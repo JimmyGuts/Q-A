@@ -104,7 +104,7 @@ const Answers = (answer) => {
         </Box>
 
         <Box mx={1}>
-          <Report />
+          <Report className="reported" />
         </Box>
       </Grid>
     </Grid>
