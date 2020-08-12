@@ -1,8 +1,9 @@
 import React from "react";
+import moment from "moment";
 import { Grid, Typography, Link, Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Helpful from "./Helpful.jsx";
-import moment from "moment";
+import Report from "./Report.jsx";
 
 // Styles for the Q&A section
 const useStyles = makeStyles((theme) => ({
@@ -103,18 +104,7 @@ const Answers = (answer) => {
         </Box>
 
         <Box mx={1}>
-          <Typography variant="caption">
-            <Link
-              className="reported"
-              href="#"
-              color="inherit"
-              onClick={() => {
-                alert("Reported!!!");
-              }}
-            >
-              Report
-            </Link>
-          </Typography>
+          <Report className="reported" />
         </Box>
       </Grid>
     </Grid>
