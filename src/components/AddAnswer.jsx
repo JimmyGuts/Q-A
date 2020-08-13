@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Button, Link } from "@material-ui/core";
+import { Button, Link, Grid, IconButton } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import CloseIcon from "@material-ui/icons/Close";
 
 //  * Answer a Question Modal Form Elements/Details *
 //  Access: From the answer link on each question
@@ -67,7 +68,9 @@ const AddAnswer = () => {
   const validate = () => {
     let temp = {};
     temp.name = name ? "" : "The Name field is required.";
-    temp.email = /^\S+@\S+\.\S+$/.test(email) ? "" : "Email is not valid and is required.";
+    temp.email = /^\S+@\S+\.\S+$/.test(email)
+      ? ""
+      : "Email is not valid and is required.";
     temp.body = body ? "" : "The Answer field is required.";
     setErrors({ ...temp });
     return Object.values(temp).every((field) => field === "");
@@ -100,7 +103,20 @@ const AddAnswer = () => {
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">Add a Answer</DialogTitle>
+        <DialogTitle id="form-dialog-title">
+          <Grid container justify="flex-end" alignItems="flex-start">
+            <IconButton
+              edge="end"
+              size="small"
+              color="secondary"
+              onClick={handleClose}
+              aria-label="close"
+            >
+              <CloseIcon />
+            </IconButton>
+          </Grid>
+          Add a Answer
+        </DialogTitle>
         <DialogContent>
           <DialogContentText>
             To add a answer to this question please enter your name and email

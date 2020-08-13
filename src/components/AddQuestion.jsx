@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -7,6 +6,8 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import AddIcon from "@material-ui/icons/Add";
+import CloseIcon from "@material-ui/icons/Close";
+import { Button, Grid, IconButton } from "@material-ui/core";
 
 //  * Ask a Question Modal Form Elements/Details *
 //  Access: Ask a question Modal should pop up when button is clicked
@@ -37,7 +38,8 @@ import AddIcon from "@material-ui/icons/Add";
 
 const AddQuestion = () => {
   // Function to handle Modal Open, Close, Cancel
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -48,6 +50,7 @@ const AddQuestion = () => {
     resetFields();
     setOpen(false);
   };
+
   // Function to reset state values
   const resetFields = () => {
     updateName("");
@@ -69,13 +72,12 @@ const AddQuestion = () => {
   };
 
   // Function to handle form submission
-  const handleSubmit = (e) => {
-    e.preventDefault;
+  const handleSubmit = () => {
     if (validate()) {
-      // window.alert("testing...");
-      
-      resetFields();
-      handleClose();
+      // Submit Form Values to API Post request
+      // Then reset forms and close modal
+      // resetFields();
+      // handleClose();
     }
   };
 
@@ -88,19 +90,35 @@ const AddQuestion = () => {
   return (
     <div>
       <Button
+        id="openAddQuestion"
         variant="outlined"
         color="inherit"
         onClick={handleClickOpen}
-        endIcon={<AddIcon />}
+        endIcon={<AddIcon color="primary"/>}
       >
         ADD A QUESTION
       </Button>
       <Dialog
+        id="questionDialog"
         open={open}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">Add a Question</DialogTitle>
+        <DialogTitle id="form-dialog-title">
+          <Grid container justify="flex-end" alignItems="flex-start">
+            <IconButton
+              id="closeIcon"
+              edge="end"
+              size="large"
+              color="secondary"
+              onClick={handleClose}
+              aria-label="close"
+            >
+              <CloseIcon />
+            </IconButton>
+          </Grid>
+          Add a Question
+        </DialogTitle>
         <DialogContent>
           <DialogContentText>
             To add a question for this product please enter a nickname and email
@@ -111,6 +129,7 @@ const AddQuestion = () => {
             id="name"
             label="Name"
             type="text"
+            value={name}
             fullWidth
             required
             defaultValue={name}
@@ -130,6 +149,7 @@ const AddQuestion = () => {
             id="email"
             label="Email Address"
             type="email"
+            value={email}
             fullWidth
             required
             defaultValue={email}
@@ -144,11 +164,12 @@ const AddQuestion = () => {
             placeholder="Example: jack@email.com"
           />
           <TextField
-            id="standard-textarea"
+            id={("standard-textarea", "question")}
             label="Question"
             fullWidth
             multiline
             required
+            value={body}
             defaultValue={body}
             onChange={(event) => {
               updateBody(event.target.value);
@@ -159,10 +180,10 @@ const AddQuestion = () => {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCancel} color="inherit">
+          <Button id="cancelButton" onClick={handleCancel} color="inherit">
             Cancel
           </Button>
-          <Button onClick={handleSubmit} color="inherit">
+          <Button id="submitButton" onClick={handleSubmit} color="inherit">
             Submit Question
           </Button>
         </DialogActions>
