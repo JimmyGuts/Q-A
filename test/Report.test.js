@@ -3,7 +3,6 @@ import Report from "../src/components/Report";
 import React from "react";
 import { configure, shallow, Link } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import { ExpansionPanelActions } from "@material-ui/core";
 configure({
   adapter: new Adapter(),
 });

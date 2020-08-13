@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Grid, IconButton } from "@material-ui/core";
+import { Button, Link, Grid, IconButton } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -7,37 +7,43 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import CloseIcon from "@material-ui/icons/Close";
-import AddIcon from "@material-ui/icons/Add";
 
-//  * Ask a Question Modal Form Elements/Details *
-//  Access: Ask a question Modal should pop up when button is clicked
+//  * Answer a Question Modal Form Elements/Details *
+//  Access: From the answer link on each question
 
-//  1. User Question (required) -
+//  1. Your Answer (required) -
 //    a. textarea
 //    b. Max 1000 characters
 
-//  2. User nickname (required)
+//  2. What is your nickname (required)
 //    a. input
 //    b. Max 60 characters
-//    c. placeholder = "Example: jackson11!"
+//    c. placeholder = "Example: jack543!"
 //    d. text under = “For privacy reasons, do not use your full name or email address”
 
-//  3. User email (required)
+//  3. Your email (required)
 //    a. input (email)
-//    c. placeholder = "Example: jack@email.com"
 //    b. Max 60 characters
+//    c. placeholder = "Example: jack@email.com"
 //    d. text under = “For authentication reasons, you will not be emailed”
 
-//  4. Submit Button
+//  4. Upload your photos
+//    a. button, when clicked, open a window where images can be selected
+//    b. after upload, a thumbnail showing the image should appear
+//    c. allow 5 images to be uploaded
+//    d. button disappears after 5 images upload
+
+//  5. Submit Answer
 //    a. button, should validate inputs when clicked
 //    b. placeholder = “Why did you like the product or not?”
 //    c. if any fields are invalid
 //      i.  prevent submission
 //      ii. give warning message = “You must enter the following: {...} ”
 //    d. field is invalid if any required field is blank or email is not in correct format
+//    e. images selected are invalid or unable to be uploaded
 
-const AddQuestion = () => {
-  // Function to handle Modal Open, Close, Cancel
+const AddAnswer = () => {
+  // Functions to handle Modal Open, Close, Cancel
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -66,7 +72,7 @@ const AddQuestion = () => {
     temp.email = /^\S+@\S+\.\S+$/.test(email)
       ? ""
       : "Email is not valid and is required.";
-    temp.body = body ? "" : "The Question field is required.";
+    temp.body = body ? "" : "The Answer field is required.";
     setErrors({ ...temp });
     return Object.values(temp).every((field) => field === "");
   };
@@ -89,17 +95,16 @@ const AddQuestion = () => {
 
   return (
     <div>
-      <Button
-        id="openAddQuestion"
-        variant="outlined"
+      <Link
+        id="openAddAnswer"
+        variant="caption"
         color="inherit"
         onClick={handleClickOpen}
-        endIcon={<AddIcon color="primary"/>}
       >
-        ADD A QUESTION
-      </Button>
+        Add Answer
+      </Link>
       <Dialog
-        id="questionDialog"
+        id="answerDialog"
         open={open}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
@@ -117,12 +122,12 @@ const AddQuestion = () => {
               <CloseIcon />
             </IconButton>
           </Grid>
-          Add a Question
+          Add a Answer
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            To add a question for this product please enter a nickname and email
-            address along with your question.
+            To add a answer to this question please enter your name and email
+            address along with your answer.
           </DialogContentText>
           <TextField
             margin="dense"
@@ -142,7 +147,7 @@ const AddQuestion = () => {
                 "For privacy reasons, do not use your full name or email address",
             })}
             inputProps={{ maxLength: 60 }}
-            placeholder="Example: jackson11!"
+            placeholder="Example: jack543!"
           />
           <TextField
             margin="dense"
@@ -164,8 +169,8 @@ const AddQuestion = () => {
             placeholder="Example: jack@email.com"
           />
           <TextField
-            id={("standard-textarea", "question")}
-            label="Question"
+            id={("standard-textarea", "answer")}
+            label="Answer"
             fullWidth
             multiline
             required
@@ -176,7 +181,7 @@ const AddQuestion = () => {
             }}
             {...(errors.body && { error: true, helperText: errors.body })}
             inputProps={{ maxLength: 1000 }}
-            placeholder="What is your question about the product?"
+            placeholder="What is your answer to this question?"
           />
         </DialogContent>
         <DialogActions>
@@ -184,7 +189,7 @@ const AddQuestion = () => {
             Cancel
           </Button>
           <Button id="submitButton" onClick={handleSubmit} color="inherit">
-            Submit Question
+            Submit Answer
           </Button>
         </DialogActions>
       </Dialog>
@@ -192,4 +197,4 @@ const AddQuestion = () => {
   );
 };
 
-export default AddQuestion;
+export default AddAnswer;
