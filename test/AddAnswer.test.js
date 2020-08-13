@@ -1,4 +1,4 @@
-import AddQuestion from "../src/components/AddQuestion";
+import AddAnswer from "../src/components/AddAnswer";
 
 import React from "react";
 import { configure, shallow } from "enzyme";
@@ -7,11 +7,11 @@ configure({
   adapter: new Adapter(),
 });
 
-describe("Add Question Test Suite", () => {
+describe("Add Answer Test Suite", () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = shallow(<AddQuestion />);
+    wrapper = shallow(<AddAnswer />);
   });
 
   // Test for existing fields
@@ -21,13 +21,13 @@ describe("Add Question Test Suite", () => {
   test("Should contain a Email field.", () => {
     expect(wrapper.exists("#email")).toBe(true);
   });
-  test("Should contain a Question field.", () => {
-    expect(wrapper.exists("#question")).toBe(true);
+  test("Should contain a Answer field.", () => {
+    expect(wrapper.exists("#answer")).toBe(true);
   });
 
   // Test for populating fields
   test("Should populate name.", () => {
-    let testValue = "james123";
+    let testValue = "john456";
     let field = "name";
     wrapper
       .find(`#${field}`)
@@ -36,7 +36,7 @@ describe("Add Question Test Suite", () => {
   });
 
   test("Should populate email.", () => {
-    let testValue = "james@email.com";
+    let testValue = "john456@email.com";
     let field = "email";
     wrapper
       .find(`#${field}`)
@@ -44,9 +44,9 @@ describe("Add Question Test Suite", () => {
     expect(wrapper.find(`#${field}`).prop("value")).toEqual(`${testValue}`);
   });
 
-  test("Should populate question.", () => {
+  test("Should populate answer.", () => {
     let testValue = "Does it come with batteries.";
-    let field = "question";
+    let field = "answer";
     wrapper
       .find(`#${field}`)
       .simulate("change", { target: { value: `${testValue}` } });
@@ -58,7 +58,7 @@ describe("Add Question Test Suite", () => {
     wrapper.find("#submitButton").simulate("click");
     expect(wrapper.find("#name").prop("error")).toEqual(true);
     expect(wrapper.find("#email").prop("error")).toEqual(true);
-    expect(wrapper.find("#question").prop("error")).toEqual(true);
+    expect(wrapper.find("#answer").prop("error")).toEqual(true);
   });
 
   test("Should validate the name field.", () => {
@@ -93,11 +93,11 @@ describe("Add Question Test Suite", () => {
     expect(wrapper.find("#email").prop("error")).toBe(undefined);
   });
 
-  test("Should validate the question body.", () => {
-    wrapper.find("#question").simulate("change", { target: { value: "" } });
+  test("Should validate the answer body.", () => {
+    wrapper.find("#answer").simulate("change", { target: { value: "" } });
     wrapper.find("#submitButton").simulate("click");
-    expect(wrapper.find("#question").prop("helperText")).toEqual(
-      "The Question field is required."
+    expect(wrapper.find("#answer").prop("helperText")).toEqual(
+      "The Answer field is required."
     );
   });
 
@@ -105,21 +105,21 @@ describe("Add Question Test Suite", () => {
   test("Should reset fields when the Cancel button is clicked.", () => {
     wrapper
       .find("#name")
-      .simulate("change", { target: { value: "John Smith" } });
-    expect(wrapper.find("#name").prop("value")).toEqual("John Smith");
+      .simulate("change", { target: { value: "Mike Jones" } });
+    expect(wrapper.find("#name").prop("value")).toEqual("Mike Jones");
     wrapper.find("#cancelButton").simulate("click");
     expect(wrapper.find("#name").prop("value")).toEqual("");
     expect(wrapper.find("#email").prop("value")).toEqual("");
-    expect(wrapper.find("#question").prop("value")).toEqual("");
+    expect(wrapper.find("#answer").prop("value")).toEqual("");
   });
 
-  test("Should open modal when ADD A QUESTION button is clicked.", () => {
-    wrapper.find("#openAddQuestion").simulate("click");
-    expect(wrapper.find("#questionDialog").prop("open")).toBe(true);
+  test("Should open modal when Add Answer link is clicked.", () => {
+    wrapper.find("#openAddAnswer").simulate("click");
+    expect(wrapper.find("#answerDialog").prop("open")).toBe(true);
   });
 
   test("Should close modal when Close icon button is clicked.", () => {
     wrapper.find("#closeIcon").simulate("click");
-    expect(wrapper.find("#questionDialog").prop("open")).toBe(false);
+    expect(wrapper.find("#answerDialog").prop("open")).toBe(false);
   });
 });

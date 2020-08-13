@@ -1,13 +1,13 @@
 import React, { useState } from "react";
+import { Button, Grid, IconButton } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import AddIcon from "@material-ui/icons/Add";
 import CloseIcon from "@material-ui/icons/Close";
-import { Button, Grid, IconButton } from "@material-ui/core";
+import AddIcon from "@material-ui/icons/Add";
 
 //  * Ask a Question Modal Form Elements/Details *
 //  Access: Ask a question Modal should pop up when button is clicked
@@ -76,8 +76,8 @@ const AddQuestion = () => {
     if (validate()) {
       // Submit Form Values to API Post request
       // Then reset forms and close modal
-      // resetFields();
-      // handleClose();
+      //// resetFields();
+      //// handleClose();
     }
   };
 
@@ -109,7 +109,7 @@ const AddQuestion = () => {
             <IconButton
               id="closeIcon"
               edge="end"
-              size="large"
+              size="small"
               color="secondary"
               onClick={handleClose}
               aria-label="close"
