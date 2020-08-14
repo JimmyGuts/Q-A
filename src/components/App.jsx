@@ -36,7 +36,7 @@ const App = ({productID}) => {
   const classes = useStyles();
 
   // Variable for the Current Product
-  let product_id = productID !== undefined ? productID : 10;
+  let product_id = productID !== undefined ? productID : 80;
   
   // Question Objects from API
   const [isLoaded, setIsLoaded] = useState(false);

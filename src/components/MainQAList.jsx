@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
   questionStyles: {
     textAlign: "left",
     color: "#101010",
+    fontSize: ".5rem",
   },
   answerStyles: {
     textAlign: "left",
@@ -60,6 +61,12 @@ const Question = (question) => {
           <Typography>|</Typography>
         </Box>
         <Box mx={1}>
+          <Report className="reported" questionID={question.question_id} />
+        </Box>
+        <Box mx={1}>
+          <Typography>|</Typography>
+        </Box>
+        <Box mx={1}>
           <AddAnswer />
         </Box>
       </Grid>
@@ -104,7 +111,7 @@ const Answers = (answer) => {
         </Box>
 
         <Box mx={1}>
-          <Report className="reported" />
+          <Report className="reported" answerID={answer.id} />
         </Box>
       </Grid>
     </Grid>

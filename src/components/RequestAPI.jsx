@@ -31,7 +31,28 @@ const markAnswerHelpful = (answer_id) => {
 };
 
 // Put to report a Question
+const reportQuestion = (question_id) => {
+  return axios
+    .put(`http://52.26.193.201:3000/qa/question/${question_id}/report`)
+    .catch((error) => {
+      console.log(error);
+    })
+}
 
 // Put to report an Answer
+const reportAnswer = (answer_id) => {
+  return axios
+    .put(`http://52.26.193.201:3000/qa/answer/${answer_id}/report`)
+    .catch((error) => {
+      console.log(error);
+    })
+}
 
-export { getProductQA, markQuestionHelpful, markAnswerHelpful };
+
+export { 
+  getProductQA, 
+  markQuestionHelpful, 
+  markAnswerHelpful, 
+  reportQuestion, 
+  reportAnswer,
+};
