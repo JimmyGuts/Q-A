@@ -67,7 +67,7 @@ const Question = (question) => {
           <Typography>|</Typography>
         </Box>
         <Box mx={1}>
-          <AddAnswer />
+          <AddAnswer questionID={question.question_id} />
         </Box>
       </Grid>
 

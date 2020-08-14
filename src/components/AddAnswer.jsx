@@ -7,6 +7,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import CloseIcon from "@material-ui/icons/Close";
+import {createAnswer} from "./RequestAPI.jsx";
 
 //  * Answer a Question Modal Form Elements/Details *
 //  Access: From the answer link on each question
@@ -42,7 +43,7 @@ import CloseIcon from "@material-ui/icons/Close";
 //    d. field is invalid if any required field is blank or email is not in correct format
 //    e. images selected are invalid or unable to be uploaded
 
-const AddAnswer = () => {
+const AddAnswer = ({questionID}) => {
   // Functions to handle Modal Open, Close, Cancel
   const [open, setOpen] = useState(false);
 
@@ -80,10 +81,16 @@ const AddAnswer = () => {
   // Function to handle form submission
   const handleSubmit = () => {
     if (validate()) {
+      let answer = {
+        name: name,
+        email: email,
+        body: body
+      }
       // Submit Form Values to API Post request
       // Then reset forms and close modal
-      //// resetFields();
-      //// handleClose();
+      createAnswer(questionID, answer)
+      resetFields();
+      handleClose();
     }
   };
 

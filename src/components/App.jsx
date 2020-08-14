@@ -4,7 +4,7 @@ import SearchBar from "./SearchBar.jsx";
 import AddQuestion from "./AddQuestion.jsx";
 import MainQAList from "./MainQAList.jsx";
 import sampleData from "../sampleQuestion";
-import { getProductQA } from "../components/RequestAPI.jsx";
+import { getProductQA } from "./RequestAPI.jsx";
 import {
   Grid,
   Button,
@@ -86,7 +86,7 @@ const App = ({productID}) => {
           </Box>
 
           <Box mx={1} mt={2}>
-            <AddQuestion id="addQuestion" />
+            <AddQuestion id="addQuestion" productID={product_id}/>
           </Box>
         </Grid>
       </Grid>

@@ -12,6 +12,38 @@ const getProductQA = (product_id) => {
     });
 };
 
+//Post Question to API
+const createQuestion = (productID, question) => {
+  return axios
+    .post(`http://52.26.193.201:3000/qa/${productID}`, {
+      name: question.name,
+      email: question.email,
+      body: question.body,
+    })
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+//Post Answers to API
+const createAnswer = (questionID, answer) => {
+  return axios
+    .post(`http://52.26.193.201:3000/qa/${questionID}/answers`, {
+      name: answer.name,
+      email: answer.email,
+      body: answer.body,
+    })
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
 // Put to mark a Question helpful
 const markQuestionHelpful = (question_id) => {
   return axios
@@ -36,8 +68,8 @@ const reportQuestion = (question_id) => {
     .put(`http://52.26.193.201:3000/qa/question/${question_id}/report`)
     .catch((error) => {
       console.log(error);
-    })
-}
+    });
+};
 
 // Put to report an Answer
 const reportAnswer = (answer_id) => {
@@ -45,14 +77,15 @@ const reportAnswer = (answer_id) => {
     .put(`http://52.26.193.201:3000/qa/answer/${answer_id}/report`)
     .catch((error) => {
       console.log(error);
-    })
-}
+    });
+};
 
-
-export { 
-  getProductQA, 
-  markQuestionHelpful, 
-  markAnswerHelpful, 
-  reportQuestion, 
+export {
+  getProductQA,
+  createAnswer,
+  createQuestion,
+  markQuestionHelpful,
+  markAnswerHelpful,
+  reportQuestion,
   reportAnswer,
 };
