@@ -1,17 +1,37 @@
-import axios from 'axios';
+import axios from "axios";
 
+// Get Question and Answers object
 const getProductQA = (product_id) => {
   return axios
-  .get(`http://52.26.193.201:3000/qa/${product_id}/`)
-  .then((res) => {
-     return res.data;
-  })
-  .catch((err) => {
-    return err;
-  });
-}
+    .get(`http://52.26.193.201:3000/qa/${product_id}/`)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      return error;
+    });
+};
 
+// Put to mark a Question helpful
+const markQuestionHelpful = (question_id) => {
+  return axios
+    .put(`http://52.26.193.201:3000/qa/question/${question_id}/helpful`)
+    .catch((error) => {
+      console.log(error);
+    });
+};
 
-export {
-  getProductQA,
-}
+// Put to mark an Answer helpful
+const markAnswerHelpful = (answer_id) => {
+  return axios
+    .put(`http://52.26.193.201:3000/qa/answer/${answer_id}/helpful`)
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+// Put to report a Question
+
+// Put to report an Answer
+
+export { getProductQA, markQuestionHelpful, markAnswerHelpful };

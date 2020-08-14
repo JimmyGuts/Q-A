@@ -20,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
 
 // Main Component for the Q&A List section
 const MainQAList = ({ data }) => {
-
   const questionList = data.results.map((question) => {
     return Question(question);
   });
@@ -31,9 +30,8 @@ const MainQAList = ({ data }) => {
 // Component for the Questions
 const Question = (question) => {
   const classes = useStyles();
-  
-  const answerList = Object.values(question.answers).map((answer) => {
 
+  const answerList = Object.values(question.answers).map((answer) => {
     return Answers(answer);
   });
 
@@ -53,7 +51,10 @@ const Question = (question) => {
 
       <Grid container item xs={3}>
         <Box mx={1}>
-          <Helpful storedCount={5} />
+          <Helpful
+            storedCount={question.question_helpfulness}
+            questionID={question.question_id}
+          />
         </Box>
         <Box mx={1}>
           <Typography>|</Typography>
@@ -95,7 +96,7 @@ const Answers = (answer) => {
         </Box>
 
         <Box mx={1}>
-          <Helpful storedCount={answer.helpfulness} />
+          <Helpful storedCount={answer.helpfulness} answerID={answer.id} />
         </Box>
 
         <Box mx={2}>
