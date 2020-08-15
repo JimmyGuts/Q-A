@@ -8,6 +8,8 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import CloseIcon from "@material-ui/icons/Close";
 import AddIcon from "@material-ui/icons/Add";
+import {createQuestion} from "./RequestAPI.jsx";
+
 
 //  * Ask a Question Modal Form Elements/Details *
 //  Access: Ask a question Modal should pop up when button is clicked
@@ -36,7 +38,7 @@ import AddIcon from "@material-ui/icons/Add";
 //      ii. give warning message = “You must enter the following: {...} ”
 //    d. field is invalid if any required field is blank or email is not in correct format
 
-const AddQuestion = () => {
+const AddQuestion = ({productID}) => {
   // Function to handle Modal Open, Close, Cancel
   const [open, setOpen] = useState(false);
 
@@ -74,10 +76,16 @@ const AddQuestion = () => {
   // Function to handle form submission
   const handleSubmit = () => {
     if (validate()) {
+      let question = {
+        name: name,
+        email: email,
+        body: body
+      }
       // Submit Form Values to API Post request
       // Then reset forms and close modal
-      //// resetFields();
-      //// handleClose();
+      createQuestion(productID, question)
+      resetFields();
+      handleClose();
     }
   };
 

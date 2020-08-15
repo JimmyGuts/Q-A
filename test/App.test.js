@@ -3,18 +3,18 @@ import App from "../src/components/App";
 // Use the following lines in each test file
 // Start here
 import React from "react";
-import { configure, shallow } from "enzyme";
+import { configure, shallow, mount } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 configure({
   adapter: new Adapter(),
 });
 // End here
 
-xdescribe("Basic Rendering", () => {
+xdescribe("App Component Test Suite", () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = shallow(<App />);
+    wrapper = mount(<App productID={36} />);
   });
 
   test(`Should contain title Question & Answers'`, () => {

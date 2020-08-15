@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Grid, Typography, Link, Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import {markQuestionHelpful, markAnswerHelpful} from "../components/RequestAPI.jsx";
 
 // *** Helpful ***
 // - link and count.
@@ -16,26 +17,33 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Helpful = ({ storedCount }) => {
+const Helpful = ({ storedCount, questionID , answerID}) => {
   const classes = useStyles();
   const [count, setCount] = useState(storedCount);
   const [helpfulness, setHelpful] = useState(false);
 
+
   // Increases Count and toggle to helpful
-  const incrementCount = () => {
-    setCount((prevCount) => prevCount + 1);
-    setHelpful((prevHelpful) => !prevHelpful);
+  const incrementQuestionCount = () => {
+    markQuestionHelpful(questionID)
+    .then(() => setCount((prevCount) => prevCount + 1))
+    .then(() => setHelpful((prevHelpful) => !prevHelpful))
   };
 
-  // Decreases Count and toggle to not helpful
-  const decrementCount = () => {
-    setCount((prevCount) => prevCount - 1);
-    setHelpful((prevHelpful) => !prevHelpful);
+  // Increases Count and toggle to helpful
+  const incrementAnswerCount = () => {
+    markAnswerHelpful(answerID)
+    .then(() => setCount((prevCount) => prevCount + 1))
+    .then(() => setHelpful((prevHelpful) => !prevHelpful))
   };
 
   // Click handler conditional statement
   const isHelpful = () => {
-    helpfulness ? decrementCount() : incrementCount();
+    if (!helpfulness && questionID) {
+      incrementQuestionCount();
+    } else if (!helpfulness && answerID) {
+      incrementAnswerCount();
+    }
   };
 
   return (

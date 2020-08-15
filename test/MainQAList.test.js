@@ -7,7 +7,7 @@ configure({
   adapter: new Adapter(),
 });
 
-describe("Main QA Component Testing", () => {
+describe("Main QA Component Test Suite", () => {
   let wrapper, testData;
 
   beforeEach(() => {
@@ -35,7 +35,7 @@ describe("Main QA Component Testing", () => {
       ],
     };
 
-    wrapper = mount(<MainQAList data={testData} />);
+    wrapper = mount(<MainQAList data={testData.results} />);
   });
 
   test("Should populate the Question", () => {

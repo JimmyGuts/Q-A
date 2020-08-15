@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Grid, TextField, InputAdornment } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 
@@ -10,10 +10,17 @@ import SearchIcon from "@material-ui/icons/Search";
 //  3. placeholder = “Have a question? Search for answers…”
 //  4. Work with the sort and rating filters
 
-const SearchQuestions = () => {
+const SearchQuestions = ({ query, setQuery }) => {
+
+  const [inputText, setInput] = useState("")
+
+  setQuery(inputText.length >= 3 ? inputText.toLowerCase() : "");
+
   return (
     <Grid container>
       <TextField
+        value={inputText}
+        onChange={(e) => setInput(e.target.value)}
         variant="outlined"
         margin="normal"
         fullWidth
