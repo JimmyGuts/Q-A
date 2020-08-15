@@ -8,6 +8,10 @@ import AddAnswer from "./AddAnswer.jsx";
 
 // Styles for the Q&A section
 const useStyles = makeStyles((theme) => ({
+  main: {
+    maxHeight: "400px",
+    overflow: "auto",
+  },
   questionStyles: {
     textAlign: "left",
     color: "#101010",
@@ -21,24 +25,26 @@ const useStyles = makeStyles((theme) => ({
 
 // Main Component for the Q&A List section
 const MainQAList = ({ data }) => {
-  const questionList = data.results.map((question) => {
-    return Question(question);
+  const classes = useStyles();
+
+  const questionList = data.map((question) => {
+    return <Question question={question}/>
   });
 
-  return <Box className="main">{questionList}</Box>;
+  return <Box className={("main", classes.main)}>{questionList}</Box>;
 };
 
 // Component for the Questions
-const Question = (question) => {
+const Question = ({question}) => {
   const classes = useStyles();
 
-  const answerList = Object.values(question.answers).map((answer) => {
-    return Answers(answer);
-  });
+  const answerList = Object.values(question.answers).map((answer) => 
+     <Answers answer={answer} />
+  );
 
   return (
     <Grid key={question.question_id} container>
-      <Grid container item xs={9}>
+      <Grid container item xs={8}>
         <Box mr={3}>
           <Typography>Q:</Typography>
         </Box>
@@ -50,7 +56,7 @@ const Question = (question) => {
         </Box>
       </Grid>
 
-      <Grid container item xs={3}>
+      <Grid container item xs={4}>
         <Box mx={1}>
           <Helpful
             storedCount={question.question_helpfulness}
@@ -79,17 +85,19 @@ const Question = (question) => {
 };
 
 // Component for the Answers
-const Answers = (answer) => {
+const Answers = ({answer}) => {
   const classes = useStyles();
 
   return (
     <Grid container key={answer.id} className={classes.answerStyles}>
-      <Box mr={3}>
-        <Typography>A:</Typography>
-      </Box>
-      <Box>
-        <Typography className="answerBody">{answer.body}</Typography>
-      </Box>
+      <Grid container item>
+        <Box mr={3}>
+          <Typography>A:</Typography>
+        </Box>
+        <Box>
+          <Typography className="answerBody">{answer.body}</Typography>
+        </Box>
+      </Grid>
 
       <Grid container item>
         <Box ml={5}>

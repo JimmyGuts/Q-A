@@ -7,11 +7,11 @@ configure({
   adapter: new Adapter(),
 });
 
-describe("Report Component Tests", () => {
+describe("Report Component Test Suite", () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = shallow(<Report />);
+    wrapper = shallow(<Report questionID={175} answerID={555}/>);
   });
 
   test("Should be available to Report answer onload", () => {
@@ -23,10 +23,5 @@ describe("Report Component Tests", () => {
     expect(wrapper.find("#report").text()).toBe("Reported");
   });
 
-  test("Should be able to un-report when clicked from a Reported state", () => {
-    wrapper.find("#report").simulate("click");
-    expect(wrapper.find("#report").text()).toBe("Reported");
-    wrapper.find("#report").simulate("click");
-    expect(wrapper.find("#report").text()).toBe("Report");
-  });
+
 });
