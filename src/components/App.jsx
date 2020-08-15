@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import SearchBar from "./SearchBar.jsx";
 import AddQuestion from "./AddQuestion.jsx";
-import MainQAList  from "./MainQAList.jsx";
+import MainQAList from "./MainQAList.jsx";
 import sampleData from "../sampleQuestion";
 import { getProductQA } from "./RequestAPI.jsx";
 import {
@@ -37,47 +37,47 @@ const App = ({ productID }) => {
   const classes = useStyles();
 
   // Variable for the Current Product
-  let product_id = productID !== undefined ? productID : 64;
+  let product_id = productID !== undefined ? productID : 65;
 
-
-  // Hooks 
+  // Hooks
   const [isLoaded, setIsLoaded] = useState(false);
   const [product, setProduct] = useState(sampleData);
-  const [query, setQuery] = useState(""); 
-  
+  const [query, setQuery] = useState("");
+
   // Request to get the specified Product's Questions and Answers.
   useEffect(() => {
-    getProductQA(product_id)
-    .then((results) => {
+    updateDisplay();
+  }, []);
+
+  const updateDisplay = () => {
+    getProductQA(product_id).then((results) => {
       setProduct(results);
       setIsLoaded(true);
     });
-  }, []);
-
+  };
   // Search query filter function
-  let filter = () => {  
-    let questionsArray = product.results
-    let filteredResults = []
+  let filter = () => {
+    let questionsArray = product.results;
+    let filteredResults = [];
     for (let i = 0; i < questionsArray.length; i++) {
       let found = false;
       let currentQuestion = questionsArray[i];
-      if (currentQuestion.question_body.toLowerCase().includes(query) ) {
+      if (currentQuestion.question_body.toLowerCase().includes(query)) {
         found = true;
       }
-      for ( let key in currentQuestion.answers ) {
+      for (let key in currentQuestion.answers) {
         let currentAnswer = currentQuestion.answers[key];
-        if ( currentAnswer.body.toLowerCase().includes(query) ) {
+        if (currentAnswer.body.toLowerCase().includes(query)) {
           found = true;
-        } 
+        }
       }
       if (found) {
         filteredResults.push(currentQuestion);
       }
     }
     return filteredResults;
-  } 
-  let filteredData = filter()
- 
+  };
+  let filteredData = filter();
 
   if (!isLoaded) {
     return (
@@ -86,21 +86,20 @@ const App = ({ productID }) => {
       </Grid>
     );
   } else {
-
     return (
-      <Grid container className={classes.grid} >
+      <Grid container className={classes.grid}>
         <Grid item>
           <Typography id="title">QUESTIONS & ANSWERS</Typography>
         </Grid>
 
-        <Grid container item xs={12} >
+        <Grid container item xs={12}>
           <Grid item xs={12}>
-            <SearchBar id="searchBar" query={query} setQuery={setQuery}/>
+            <SearchBar id="searchBar" setQuery={setQuery} />
           </Grid>
         </Grid>
 
         <Grid item xs={12}>
-          <MainQAList data={filteredData} />
+          <MainQAList data={filteredData} updateDisplay={updateDisplay}/>
         </Grid>
 
         <Grid container item>
@@ -115,7 +114,11 @@ const App = ({ productID }) => {
           </Box>
 
           <Box mx={1} mt={2}>
-            <AddQuestion id="addQuestion" productID={product_id} />
+            <AddQuestion
+              id="addQuestion"
+              productID={product_id}
+              updateDisplay={updateDisplay}
+            />
           </Box>
         </Grid>
       </Grid>

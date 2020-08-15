@@ -44,7 +44,7 @@ import {createAnswer} from "./RequestAPI.jsx";
 //    d. field is invalid if any required field is blank or email is not in correct format
 //    e. images selected are invalid or unable to be uploaded
 
-const AddAnswer = ({questionID}) => {
+const AddAnswer = ({questionID, updateDisplay }) => {
   // Functions to handle Modal Open, Close, Cancel
   const [open, setOpen] = useState(false);
 
@@ -90,8 +90,9 @@ const AddAnswer = ({questionID}) => {
       // Submit Form Values to API Post request
       // Then reset forms and close modal
       createAnswer(questionID, answer)
-      resetFields();
-      handleClose();
+      .then(resetFields())
+      .then(handleClose())
+      .then(() => updateDisplay())
     }
   };
 
