@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   grid: {
     margin: "0 auto",
     maxWidth: "75%",
-    maxHeight: "540px",
+    maxHeight: "50%",
     background: "#white",
     direction: "column",
     justify: "space-evenly",
@@ -37,7 +37,8 @@ const App = ({ productID }) => {
   const classes = useStyles();
 
   // Variable for the Current Product
-  let product_id = productID !== undefined ? productID : 65;
+  let product_id =
+    productID !== undefined ? productID : parseInt(Math.random() * 100);
 
   // Hooks
   const [isLoaded, setIsLoaded] = useState(false);
@@ -67,7 +68,10 @@ const App = ({ productID }) => {
       }
       for (let key in currentQuestion.answers) {
         let currentAnswer = currentQuestion.answers[key];
-        if (currentAnswer.body.toLowerCase().includes(query)) {
+        if (
+          currentAnswer.body.toLowerCase().includes(query) ||
+          currentAnswer.answerer_name.toLowerCase().includes(query)
+        ) {
           found = true;
         }
       }
@@ -99,7 +103,7 @@ const App = ({ productID }) => {
         </Grid>
 
         <Grid item xs={12}>
-          <MainQAList data={filteredData} updateDisplay={updateDisplay}/>
+          <MainQAList data={filteredData} updateDisplay={updateDisplay} />
         </Grid>
 
         <Grid container item>
