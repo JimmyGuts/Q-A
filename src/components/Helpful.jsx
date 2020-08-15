@@ -51,6 +51,7 @@ const Helpful = ({ storedCount }) => {
             id="helpfulClick"
             className={classes.linkStyles}
             onClick={isHelpful}
+            color="secondary"
           >
             Yes
           </Link>
@@ -58,7 +59,11 @@ const Helpful = ({ storedCount }) => {
       </Box>
 
       <Box>
-        <Typography variant="caption" className={`clicks-${count}`}>
+        <Typography
+          variant="caption"
+          className={`clicks-${count}`}
+          style={helpfulness ? { color: "green" } : { color: "inherit" }}
+        >
           ({count})
         </Typography>
       </Box>

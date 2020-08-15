@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import moment from "moment";
-import { Grid, Typography, Link, Box } from "@material-ui/core";
+import { Grid, Typography, Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Helpful from "./Helpful.jsx";
 import Report from "./Report.jsx";
@@ -20,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
 
 // Main Component for the Q&A List section
 const MainQAList = ({ data }) => {
-  const classes = useStyles();
 
   const questionList = data.results.map((question) => {
     return Question(question);
@@ -32,8 +31,9 @@ const MainQAList = ({ data }) => {
 // Component for the Questions
 const Question = (question) => {
   const classes = useStyles();
-
+  
   const answerList = Object.values(question.answers).map((answer) => {
+
     return Answers(answer);
   });
 

@@ -10,7 +10,7 @@ configure({
 });
 // End here
 
-describe("Basic Rendering", () => {
+xdescribe("Basic Rendering", () => {
   let wrapper;
 
   beforeEach(() => {
