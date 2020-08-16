@@ -13,6 +13,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Helpful from "./Helpful.jsx";
 import Report from "./Report.jsx";
 import AddAnswer from "./AddAnswer.jsx";
+import AddPhotos from "./AddPhotos.jsx";
 
 // Styles for the Q&A section
 const useStyles = makeStyles((theme) => ({
@@ -36,12 +37,6 @@ const useStyles = makeStyles((theme) => ({
   // separator: {
   //   color="secondary"
   // },
-  root: {
-    maxWidth: 150,
-    maxHeight: 150,
-    marginLeft: "40px",
-  },
-  media: {},
 }));
 
 // Main Component for the Q&A List section
@@ -188,15 +183,9 @@ const Answers = ({ answer }) => {
       </Grid>
 
       <Grid container item>
-        {answer.photos.map((photo) => (
-          <Card className={classes.root}>
-            <CardMedia
-              className={classes.media}
-              component="img"
-              src={photo}
-            ></CardMedia>
-          </Card>
-        ))}
+        {answer.photos.map((photo, i) => 
+          <AddPhotos key={i} photo={photo} />
+        )}
       </Grid>
     </Grid>
   );

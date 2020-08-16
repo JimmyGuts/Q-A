@@ -7,8 +7,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import CloseIcon from "@material-ui/icons/Close";
-import {createAnswer} from "./RequestAPI.jsx";
-
+import { createAnswer } from "./RequestAPI.jsx";
 
 //  * Answer a Question Modal Form Elements/Details *
 //  Access: From the answer link on each question
@@ -44,7 +43,7 @@ import {createAnswer} from "./RequestAPI.jsx";
 //    d. field is invalid if any required field is blank or email is not in correct format
 //    e. images selected are invalid or unable to be uploaded
 
-const AddAnswer = ({questionID, updateDisplay }) => {
+const AddAnswer = ({ questionID, updateDisplay }) => {
   // Functions to handle Modal Open, Close, Cancel
   const [open, setOpen] = useState(false);
 
@@ -85,14 +84,14 @@ const AddAnswer = ({questionID, updateDisplay }) => {
       let answer = {
         name: name,
         email: email,
-        body: body
-      }
+        body: body,
+      };
       // Submit Form Values to API Post request
       // Then reset forms and close modal
       createAnswer(questionID, answer)
-      .then(resetFields())
-      .then(handleClose())
-      .then(() => updateDisplay())
+        .then(resetFields())
+        .then(handleClose())
+        .then(() => updateDisplay());
     }
   };
 
@@ -100,10 +99,11 @@ const AddAnswer = ({questionID, updateDisplay }) => {
   const [name, updateName] = useState("");
   const [email, updateEmail] = useState("");
   const [body, updateBody] = useState("");
+  const [photos, updatePhotos] = useState([]);
   const [errors, setErrors] = useState({});
 
   return (
-    <div>
+    <React.Fragment>
       <Link
         id="openAddAnswer"
         variant="caption"
@@ -202,7 +202,7 @@ const AddAnswer = ({questionID, updateDisplay }) => {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </React.Fragment>
   );
 };
 
