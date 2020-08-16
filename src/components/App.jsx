@@ -37,13 +37,14 @@ const App = ({ productID }) => {
   const classes = useStyles();
 
   // Variable for the Current Product
-  let product_id =
-    productID !== undefined ? productID : parseInt(Math.random() * 100);
+  let product_id = productID !== undefined ? productID : 25;
+  // productID !== undefined ? productID : parseInt(Math.random() * 100);
 
   // Hooks
   const [isLoaded, setIsLoaded] = useState(false);
   const [product, setProduct] = useState(sampleData);
   const [query, setQuery] = useState("");
+  const [questionCount, setQuestionCount] = useState(2);
 
   // Request to get the specified Product's Questions and Answers.
   useEffect(() => {
@@ -56,6 +57,7 @@ const App = ({ productID }) => {
       setIsLoaded(true);
     });
   };
+
   // Search query filter function
   let filter = () => {
     let questionsArray = product.results;
@@ -83,10 +85,15 @@ const App = ({ productID }) => {
   };
   let filteredData = filter();
 
+  // Update number of Questions displayed
+  const updateQuestionCount = () => {
+    setQuestionCount((prevCount) => prevCount + 2);
+  };
+
   if (!isLoaded) {
     return (
       <Grid container justify="center" alignItems="center">
-        <CircularProgress size={400} />
+        <CircularProgress size={300} />
       </Grid>
     );
   } else {
@@ -103,18 +110,26 @@ const App = ({ productID }) => {
         </Grid>
 
         <Grid item xs={12}>
-          <MainQAList data={filteredData} updateDisplay={updateDisplay} />
+          <MainQAList
+            data={filteredData.slice(0, questionCount)}
+            updateDisplay={updateDisplay}
+          />
         </Grid>
 
         <Grid container item>
           <Box mx={1} mt={2}>
-            <Button
-              id="moreQuestions"
-              variant="outlined"
-              className={classes.button}
-            >
-              <Typography variant="button">MORE ANSWERED QUESTIONS</Typography>
-            </Button>
+            {filteredData.length > questionCount ? (
+              <Button
+                id="moreQuestions"
+                variant="outlined"
+                className={classes.button}
+                onClick={updateQuestionCount}
+              >
+                <Typography variant="button">
+                  MORE ANSWERED QUESTIONS
+                </Typography>
+              </Button>
+            ) : null}
           </Box>
 
           <Box mx={1} mt={2}>
