@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 import moment from "moment";
-import { Grid, Typography, Box, Link } from "@material-ui/core";
+import {
+  Grid,
+  Typography,
+  Box,
+  Link,
+  Card,
+  CardMedia,
+  CardContent,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Helpful from "./Helpful.jsx";
 import Report from "./Report.jsx";
@@ -25,9 +33,15 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "Bold",
     color: "black",
   },
-  separator: {
-    color: "blue"
-  }
+  // separator: {
+  //   color="secondary"
+  // },
+  root: {
+    maxWidth: 150,
+    maxHeight: 150,
+    marginLeft: "40px",
+  },
+  media: {},
 }));
 
 // Main Component for the Q&A List section
@@ -52,7 +66,7 @@ const Question = ({ question, updateDisplay }) => {
   const classes = useStyles();
   const [answerCount, setAnswerCount] = useState(2);
   let totalAnswers = Object.values(question.answers).length;
-  
+
   // Update number of Answers displayed
   const updateAnswerCount = () => {
     setAnswerCount((prevCount) => (prevCount === 2 ? totalAnswers : 2));
@@ -85,13 +99,13 @@ const Question = ({ question, updateDisplay }) => {
           />
         </Box>
         <Box mx={1}>
-          <Typography className={classes.separator}>|</Typography>
+          <Typography color="primary">|</Typography>
         </Box>
         <Box mx={1}>
           <Report className="reported" questionID={question.question_id} />
         </Box>
         <Box mx={1}>
-          <Typography className={classes.separator}>|</Typography>
+          <Typography color="primary">|</Typography>
         </Box>
         <Box mx={1}>
           <AddAnswer
@@ -153,7 +167,9 @@ const Answers = ({ answer }) => {
         </Box>
 
         <Box mx={2}>
-          <Typography variant="caption" className={classes.separator}>|</Typography>
+          <Typography variant="caption" color="primary">
+            |
+          </Typography>
         </Box>
 
         <Box mx={1}>
@@ -161,12 +177,26 @@ const Answers = ({ answer }) => {
         </Box>
 
         <Box mx={2}>
-          <Typography variant="caption" className={classes.separator}>|</Typography>
+          <Typography variant="caption" color="primary">
+            |
+          </Typography>
         </Box>
 
         <Box mx={1}>
           <Report className="reported" answerID={answer.id} />
         </Box>
+      </Grid>
+
+      <Grid container item>
+        {answer.photos.map((photo) => (
+          <Card className={classes.root}>
+            <CardMedia
+              className={classes.media}
+              component="img"
+              src={photo}
+            ></CardMedia>
+          </Card>
+        ))}
       </Grid>
     </Grid>
   );

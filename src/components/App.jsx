@@ -30,6 +30,9 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.secondary,
     background: "FFF",
   },
+  button: {
+    color: "inherit",
+  },
 }));
 
 // Overall App Component
@@ -37,7 +40,7 @@ const App = ({ productID }) => {
   const classes = useStyles();
 
   // Variable for the Current Product
-  let product_id = productID !== undefined ? productID : 25;
+  let product_id = productID !== undefined ? productID : 86;
   // productID !== undefined ? productID : parseInt(Math.random() * 100);
 
   // Hooks
@@ -121,8 +124,9 @@ const App = ({ productID }) => {
             {filteredData.length > questionCount ? (
               <Button
                 id="moreQuestions"
-                variant="outlined"
                 className={classes.button}
+                variant="outlined"
+                color="inherit"
                 onClick={updateQuestionCount}
               >
                 <Typography variant="button">
