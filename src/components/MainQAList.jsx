@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import moment from "moment";
 import { Grid, Typography, Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -21,26 +21,30 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "left",
     color: "#777",
   },
+  seller: {
+    fontWeight: "Bold",
+    color: "black",
+  },
 }));
 
 // Main Component for the Q&A List section
-const MainQAList = ({ data }) => {
+const MainQAList = ({ data , updateDisplay }) => {
   const classes = useStyles();
 
   const questionList = data.map((question) => {
-    return <Question question={question}/>
+    return <Question key={question.question_id} question={question} updateDisplay={updateDisplay} />;
   });
 
   return <Box className={("main", classes.main)}>{questionList}</Box>;
 };
 
 // Component for the Questions
-const Question = ({question}) => {
+const Question = ({ question, updateDisplay}) => {
   const classes = useStyles();
 
-  const answerList = Object.values(question.answers).map((answer) => 
-     <Answers answer={answer} />
-  );
+  const answerList = Object.values(question.answers).map((answer) => (
+    <Answers key={answer.id} answer={answer} updateDisplay={updateDisplay} />
+  ));
 
   return (
     <Grid key={question.question_id} container>
@@ -73,7 +77,7 @@ const Question = ({question}) => {
           <Typography>|</Typography>
         </Box>
         <Box mx={1}>
-          <AddAnswer questionID={question.question_id} />
+          <AddAnswer questionID={question.question_id} updateDisplay={updateDisplay} />
         </Box>
       </Grid>
 
@@ -85,7 +89,7 @@ const Question = ({question}) => {
 };
 
 // Component for the Answers
-const Answers = ({answer}) => {
+const Answers = ({ answer }) => {
   const classes = useStyles();
 
   return (
@@ -102,7 +106,19 @@ const Answers = ({answer}) => {
       <Grid container item>
         <Box ml={5}>
           <Typography variant="caption" className="answerName">
-            by {answer.answerer_name}, {moment(answer.date).format("LL")}
+            by{" "}
+            <Typography
+              display="inline"
+              variant="caption"
+              className={
+                answer.answerer_name.toLowerCase() === "seller"
+                  ? classes.seller
+                  : null
+              }
+            >
+              {answer.answerer_name}
+            </Typography>
+            , {moment(answer.date).format("LL")}
           </Typography>
         </Box>
 

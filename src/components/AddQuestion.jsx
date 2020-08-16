@@ -38,7 +38,7 @@ import {createQuestion} from "./RequestAPI.jsx";
 //      ii. give warning message = “You must enter the following: {...} ”
 //    d. field is invalid if any required field is blank or email is not in correct format
 
-const AddQuestion = ({productID}) => {
+const AddQuestion = ({productID, updateDisplay}) => {
   // Function to handle Modal Open, Close, Cancel
   const [open, setOpen] = useState(false);
 
@@ -75,6 +75,7 @@ const AddQuestion = ({productID}) => {
 
   // Function to handle form submission
   const handleSubmit = () => {
+    console.log(productID);
     if (validate()) {
       let question = {
         name: name,
@@ -84,8 +85,9 @@ const AddQuestion = ({productID}) => {
       // Submit Form Values to API Post request
       // Then reset forms and close modal
       createQuestion(productID, question)
-      resetFields();
-      handleClose();
+      .then(resetFields())
+      .then(handleClose())
+      .then(() => updateDisplay(productID))
     }
   };
 
