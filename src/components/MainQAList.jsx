@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import moment from "moment";
-import { Grid, Typography, Box } from "@material-ui/core";
+import { Grid, Typography, Box, Link } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Helpful from "./Helpful.jsx";
 import Report from "./Report.jsx";
@@ -25,26 +25,43 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "Bold",
     color: "black",
   },
+  separator: {
+    color: "blue"
+  }
 }));
 
 // Main Component for the Q&A List section
-const MainQAList = ({ data , updateDisplay }) => {
+const MainQAList = ({ data, updateDisplay }) => {
   const classes = useStyles();
 
   const questionList = data.map((question) => {
-    return <Question key={question.question_id} question={question} updateDisplay={updateDisplay} />;
+    return (
+      <Question
+        key={question.question_id}
+        question={question}
+        updateDisplay={updateDisplay}
+      />
+    );
   });
 
   return <Box className={("main", classes.main)}>{questionList}</Box>;
 };
 
 // Component for the Questions
-const Question = ({ question, updateDisplay}) => {
+const Question = ({ question, updateDisplay }) => {
   const classes = useStyles();
-
-  const answerList = Object.values(question.answers).map((answer) => (
-    <Answers key={answer.id} answer={answer} updateDisplay={updateDisplay} />
-  ));
+  const [answerCount, setAnswerCount] = useState(2);
+  let totalAnswers = Object.values(question.answers).length;
+  
+  // Update number of Answers displayed
+  const updateAnswerCount = () => {
+    setAnswerCount((prevCount) => (prevCount === 2 ? totalAnswers : 2));
+  };
+  const answerList = Object.values(question.answers)
+    .slice(0, answerCount)
+    .map((answer) => (
+      <Answers key={answer.id} answer={answer} updateDisplay={updateDisplay} />
+    ));
 
   return (
     <Grid key={question.question_id} container>
@@ -68,21 +85,34 @@ const Question = ({ question, updateDisplay}) => {
           />
         </Box>
         <Box mx={1}>
-          <Typography>|</Typography>
+          <Typography className={classes.separator}>|</Typography>
         </Box>
         <Box mx={1}>
           <Report className="reported" questionID={question.question_id} />
         </Box>
         <Box mx={1}>
-          <Typography>|</Typography>
+          <Typography className={classes.separator}>|</Typography>
         </Box>
         <Box mx={1}>
-          <AddAnswer questionID={question.question_id} updateDisplay={updateDisplay} />
+          <AddAnswer
+            questionID={question.question_id}
+            updateDisplay={updateDisplay}
+          />
         </Box>
       </Grid>
 
       <Grid container item xs={12}>
         <Typography>{answerList}</Typography>
+      </Grid>
+
+      <Grid container>
+        {totalAnswers > 2 ? (
+          <Link onClick={updateAnswerCount}>
+            <Typography variant="caption">
+              {answerCount === 2 ? "See All Answers" : "Collapse Answers"}
+            </Typography>
+          </Link>
+        ) : null}
       </Grid>
     </Grid>
   );
@@ -123,7 +153,7 @@ const Answers = ({ answer }) => {
         </Box>
 
         <Box mx={2}>
-          <Typography variant="caption">|</Typography>
+          <Typography variant="caption" className={classes.separator}>|</Typography>
         </Box>
 
         <Box mx={1}>
@@ -131,7 +161,7 @@ const Answers = ({ answer }) => {
         </Box>
 
         <Box mx={2}>
-          <Typography variant="caption">|</Typography>
+          <Typography variant="caption" className={classes.separator}>|</Typography>
         </Box>
 
         <Box mx={1}>
