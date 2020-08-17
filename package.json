@@ -24,7 +24,8 @@
     "axios": "^0.19.2",
     "moment": "^2.27.0",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "react-swipeable-views": "^0.13.9"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",

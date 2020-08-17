@@ -8,6 +8,7 @@ import {
   Dialog,
   DialogContent,
   DialogActions,
+  Fab,
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 
@@ -19,8 +20,8 @@ const useStyles = makeStyles((theme) => ({
   },
   view: {
     maxWidth: "1000px",
-    maxHeight: "750px"
-  }
+    maxHeight: "750px",
+  },
 }));
 
 const AddPhotos = (photo) => {
@@ -45,9 +46,17 @@ const AddPhotos = (photo) => {
       </Card>
       <Dialog id="answerDialog" open={open} onClose={handleClose} maxWidth="xl">
         <DialogContent onClick={handleClose}>
-          <Box className={classes.view} component="img" src={Object.values(photo)} ></Box>
+          <Box position="absolute" zIndex="tooltip" display="flex-end">
+            <Fab onClick={handleClose} aria-label="close" size="small">
+              <CloseIcon />
+            </Fab>
+          </Box>
+          <Box
+            className={classes.view}
+            component="img"
+            src={Object.values(photo)}
+          ></Box>
         </DialogContent>
-        <DialogActions></DialogActions>
       </Dialog>
     </React.Fragment>
   );

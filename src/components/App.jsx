@@ -40,7 +40,7 @@ const App = ({ productID }) => {
   const classes = useStyles();
 
   // Variable for the Current Product
-  let product_id = productID !== undefined ? productID : 1;
+  let product_id = productID !== undefined ? productID : 32;
   // productID !== undefined ? productID : parseInt(Math.random() * 100);
 
   // Hooks

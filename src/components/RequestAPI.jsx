@@ -3,11 +3,11 @@ import axios from "axios";
 // Get Question and Answers object
 const getProductQA = (product_id) => {
   return axios
-    .get(`http://52.26.193.201:3000/qa/${product_id}/`, { 
+    .get(`http://52.26.193.201:3000/qa/${product_id}/`, {
       params: {
         product_id: product_id,
         count: 100,
-      }
+      },
     })
     .then((response) => {
       return response.data;
@@ -40,6 +40,7 @@ const createAnswer = (questionID, answer) => {
       name: answer.name,
       email: answer.email,
       body: answer.body,
+      photos: answer.photos,
     })
     .then((response) => {
       console.log(response);
