@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import CloseIcon from "@material-ui/icons/Close";
 import {
   Box,
   Card,
@@ -7,11 +8,14 @@ import {
   CardActionArea,
   Dialog,
   DialogContent,
-  DialogActions,
   Fab,
 } from "@material-ui/core";
-import CloseIcon from "@material-ui/icons/Close";
 
+// *********************************
+// *** Add Photos View Component ***
+// *********************************
+
+// Styles
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 150,
@@ -25,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AddPhotos = (photo) => {
+  // Functions to handle Modal Open, Close
   const classes = useStyles();
 
   const [open, setOpen] = useState(false);

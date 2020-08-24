@@ -8,6 +8,10 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import { TextField, Grid, Button, Card, CardMedia } from "@material-ui/core";
 
+// *******************************
+// *** Upload Photos Component ***
+// *******************************
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -53,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
 
 const UploadPhotos = ({ updatePhotos }) => {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
 
   const [photo1, setPhoto1] = useState("");
   const [photo2, setPhoto2] = useState("");
@@ -73,11 +77,9 @@ const UploadPhotos = ({ updatePhotos }) => {
   // Functions for Photos
   const handleAddPhoto = (newPhoto, index) => {
     if (newPhoto) {
-      // updatePhotos((prevPhotos) => [...prevPhotos, newPhoto]);
       updatePhotos((prevPhotos) => {
         let updatedCollection = prevPhotos;
         updatedCollection.splice(index, 1, newPhoto);
-        // console.log(updatedCollection);
         return updatedCollection;
       });
     }
@@ -85,39 +87,44 @@ const UploadPhotos = ({ updatePhotos }) => {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" color="default">
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          indicatorColor="primary"
-          textColor="primary"
-          variant="fullWidth"
-          aria-label="full width tabs example"
-        >
-          <Tab label="One" {...a11yProps(0)} />
-          <Tab
-            label="Two"
-            disabled={!photo1 ? true : false}
-            {...a11yProps(1)}
-          />
-          <Tab
-            label="Three"
-            disabled={!photo2 ? true : false}
-            {...a11yProps(2)}
-          />
-          <Tab
-            label="Four"
-            disabled={!photo3 ? true : false}
-            {...a11yProps(3)}
-          />
-          <Tab
-            label="Five"
-            disabled={!photo4 ? true : false}
-            {...a11yProps(4)}
-          />
-        </Tabs>
-      </AppBar>
+      <Box mt={2}>
+        <AppBar position="static" color="default">
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            indicatorColor="primary"
+            textColor="primary"
+            variant="fullWidth"
+            aria-label="full width tabs example"
+          >
+            <Tab label="One" {...a11yProps(0)} />
+            <Tab
+              label="Two"
+              disabled={!photo1 ? true : false}
+              {...a11yProps(1)}
+            />
+            <Tab
+              label="Three"
+              disabled={!photo2 ? true : false}
+              {...a11yProps(2)}
+            />
+            <Tab
+              label="Four"
+              disabled={!photo3 ? true : false}
+              {...a11yProps(3)}
+            />
+            <Tab
+              label="Five"
+              disabled={!photo4 ? true : false}
+              {...a11yProps(4)}
+            />
+          </Tabs>
+        </AppBar>
 
+        <Typography variant="caption">
+          You can upload up to 5 images. Add your photos Url below.
+        </Typography>
+      </Box>
       <TabPanel value={value} index={0}>
         <Button
           onClick={() => {
@@ -136,11 +143,9 @@ const UploadPhotos = ({ updatePhotos }) => {
           fullWidth
           multiline
           value={photo1}
-          defaultValue={photo1}
           onChange={(event) => {
             setPhoto1(event.target.value);
           }}
-          // {...(errors.body && { error: true, helperText: errors.body })}
           inputProps={{ maxLength: 1000 }}
           placeholder="Enter your photo url?"
         />
@@ -171,11 +176,9 @@ const UploadPhotos = ({ updatePhotos }) => {
           fullWidth
           multiline
           value={photo2}
-          defaultValue={photo2}
           onChange={(event) => {
             setPhoto2(event.target.value);
           }}
-          // {...(errors.body && { error: true, helperText: errors.body })}
           inputProps={{ maxLength: 1000 }}
           placeholder="Enter your photo url?"
         />
@@ -206,11 +209,9 @@ const UploadPhotos = ({ updatePhotos }) => {
           fullWidth
           multiline
           value={photo3}
-          defaultValue={photo3}
           onChange={(event) => {
             setPhoto3(event.target.value);
           }}
-          // {...(errors.body && { error: true, helperText: errors.body })}
           inputProps={{ maxLength: 1000 }}
           placeholder="Enter your photo url?"
         />
@@ -240,11 +241,9 @@ const UploadPhotos = ({ updatePhotos }) => {
           fullWidth
           multiline
           value={photo4}
-          defaultValue={photo4}
           onChange={(event) => {
             setPhoto4(event.target.value);
           }}
-          // {...(errors.body && { error: true, helperText: errors.body })}
           inputProps={{ maxLength: 1000 }}
           placeholder="Enter your photo url?"
         />
@@ -274,11 +273,9 @@ const UploadPhotos = ({ updatePhotos }) => {
           fullWidth
           multiline
           value={photo5}
-          defaultValue={photo5}
           onChange={(event) => {
             setPhoto5(event.target.value);
           }}
-          // {...(errors.body && { error: true, helperText: errors.body })}
           inputProps={{ maxLength: 1000 }}
           placeholder="Enter your photo url?"
         />

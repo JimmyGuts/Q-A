@@ -1,5 +1,9 @@
 import axios from "axios";
 
+// ***************************
+// *** API Requests Routes ***
+// ***************************
+
 // Get Question and Answers object
 const getProductQA = (product_id) => {
   return axios
@@ -50,7 +54,7 @@ const createAnswer = (questionID, answer) => {
     });
 };
 
-// Put to mark a Question helpful
+// Put to mark a Question Helpful
 const markQuestionHelpful = (question_id) => {
   return axios
     .put(`http://52.26.193.201:3000/qa/question/${question_id}/helpful`)
@@ -59,7 +63,7 @@ const markQuestionHelpful = (question_id) => {
     });
 };
 
-// Put to mark an Answer helpful
+// Put to mark an Answer Helpful
 const markAnswerHelpful = (answer_id) => {
   return axios
     .put(`http://52.26.193.201:3000/qa/answer/${answer_id}/helpful`)
@@ -68,7 +72,7 @@ const markAnswerHelpful = (answer_id) => {
     });
 };
 
-// Put to report a Question
+// Put to Report a Question
 const reportQuestion = (question_id) => {
   return axios
     .put(`http://52.26.193.201:3000/qa/question/${question_id}/report`)
@@ -77,7 +81,7 @@ const reportQuestion = (question_id) => {
     });
 };
 
-// Put to report an Answer
+// Put to Report an Answer
 const reportAnswer = (answer_id) => {
   return axios
     .put(`http://52.26.193.201:3000/qa/answer/${answer_id}/report`)
