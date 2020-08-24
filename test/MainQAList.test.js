@@ -47,7 +47,7 @@ describe("Main QA Component Test Suite", () => {
   });
 
   test("Should populate the Answerers Name", () => {
-    expect(wrapper.exists(".answerName")).toBe(true);
+    expect(wrapper.exists("#answerName")).toBe(true);
   });
 
   test("Should have a reported feature", () => {

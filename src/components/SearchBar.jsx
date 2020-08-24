@@ -2,24 +2,19 @@ import React, { useState } from "react";
 import { Grid, TextField, InputAdornment } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 
-//  * Search Questions Elements/Details *
-//  Access: Search Bar above question list
+// ***************************
+// *** SearchBar Component ***
+// ***************************
 
-//  1. Input element
-//  2. Begin and update search/filter when there is 3 or more characters typed
-//  3. placeholder = “Have a question? Search for answers…”
-//  4. Work with the sort and rating filters
+const SearchBar = ({ handleSearch }) => {
+  const [inputText, setInput] = useState("");
 
-const SearchQuestions = ({ setQuery }) => {
-
-  const [inputText, setInput] = useState("")
-
-
-  setQuery(inputText.length >= 3 ? inputText.toLowerCase() : "");
+  handleSearch(inputText.length >= 3 ? inputText.toLowerCase() : "");
 
   return (
     <Grid container>
       <TextField
+        id="search"
         value={inputText}
         onChange={(e) => setInput(e.target.value)}
         variant="outlined"
@@ -38,4 +33,4 @@ const SearchQuestions = ({ setQuery }) => {
   );
 };
 
-export default SearchQuestions;
+export default SearchBar;

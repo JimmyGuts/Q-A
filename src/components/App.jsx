@@ -3,7 +3,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import SearchBar from "./SearchBar.jsx";
 import AddQuestion from "./AddQuestion.jsx";
 import MainQAList from "./MainQAList.jsx";
-import sampleData from "../sampleQuestion";
 import { getProductQA } from "./RequestAPI.jsx";
 import {
   Grid,
@@ -24,12 +23,6 @@ const useStyles = makeStyles((theme) => ({
     justify: "space-evenly",
     alignItems: "stretch",
   },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: "center",
-    color: theme.palette.text.secondary,
-    background: "FFF",
-  },
   button: {
     color: "inherit",
   },
@@ -40,14 +33,13 @@ const App = ({ productID }) => {
   const classes = useStyles();
 
   // Variable for the Current Product
-  let product_id = productID !== undefined ? productID : 32;
-  // productID !== undefined ? productID : parseInt(Math.random() * 100);
+  let product_id = productID;
 
   // Hooks
   const [isLoaded, setIsLoaded] = useState(false);
-  const [product, setProduct] = useState(sampleData);
-  const [query, setQuery] = useState("");
+  const [product, setProduct] = useState({ results: [] });
   const [questionCount, setQuestionCount] = useState(2);
+  const [query, setQuery] = useState("");
 
   // Request to get the specified Product's Questions and Answers.
   useEffect(() => {
@@ -55,6 +47,7 @@ const App = ({ productID }) => {
   }, []);
 
   const updateDisplay = () => {
+    setIsLoaded(false);
     getProductQA(product_id).then((results) => {
       setProduct(results);
       setIsLoaded(true);
@@ -86,7 +79,11 @@ const App = ({ productID }) => {
     }
     return filteredResults;
   };
-  let filteredData = filter();
+
+  const handleSearch = (value) => {
+    setQuery(value);
+  };
+  let filteredData = filter("");
 
   // Update number of Questions displayed
   const updateQuestionCount = () => {
@@ -96,30 +93,32 @@ const App = ({ productID }) => {
   if (!isLoaded) {
     return (
       <Grid container justify="center" alignItems="center">
-        <CircularProgress size={300} />
+        <CircularProgress size={200} />
       </Grid>
     );
   } else {
     return (
       <Grid container className={classes.grid}>
         <Grid item>
-          <Typography id="title">QUESTIONS & ANSWERS</Typography>
+          <Typography id="title" variant="h5">
+            QUESTIONS & ANSWERS
+          </Typography>
         </Grid>
 
         <Grid container item xs={12}>
-          <Grid item xs={12}>
-            <SearchBar id="searchBar" setQuery={setQuery} />
+          <Grid item xs={12} style={{ marginBottom: "15px" }}>
+            <SearchBar id="searchBar" handleSearch={handleSearch} />
           </Grid>
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid container item xs={12} style={{ marginBottom: "15px" }}>
           <MainQAList
             data={filteredData.slice(0, questionCount)}
             updateDisplay={updateDisplay}
           />
         </Grid>
 
-        <Grid container item>
+        <Grid container item xs={12} style={{ marginBottom: "20px" }}>
           <Box mx={1} mt={2}>
             {filteredData.length > questionCount ? (
               <Button
