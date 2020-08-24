@@ -169,7 +169,8 @@ const Answers = ({ answer }) => {
         <Box ml={5} paddingRight={2} marginBottom={1}>
           <Typography
             variant="caption"
-            className={("answerName", classes.answerDetail)}
+            id="answerName"
+            className={classes.answerDetail}
           >
             {"by "}
             <Typography

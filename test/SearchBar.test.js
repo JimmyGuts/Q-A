@@ -11,7 +11,7 @@ describe("SearchBar Component Test Suite", () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = shallow(<SearchBar setQuery={() => {}} />);
+    wrapper = shallow(<SearchBar handleSearch={() => {}} />);
   });
 
   test("Should contain a Search field.", () => {
