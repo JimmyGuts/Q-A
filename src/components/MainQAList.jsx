@@ -1,10 +1,19 @@
 import React, { useState } from "react";
 import moment from "moment";
-import { Grid, Typography, Box, Link } from "@material-ui/core";
+import {
+  Grid,
+  Typography,
+  Box,
+  Link,
+  Card,
+  CardMedia,
+  CardContent,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Helpful from "./Helpful.jsx";
 import Report from "./Report.jsx";
 import AddAnswer from "./AddAnswer.jsx";
+import AddPhotos from "./AddPhotos.jsx";
 
 // Styles for the Q&A section
 const useStyles = makeStyles((theme) => ({
@@ -25,9 +34,9 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "Bold",
     color: "black",
   },
-  separator: {
-    color: "blue"
-  }
+  // separator: {
+  //   color="secondary"
+  // },
 }));
 
 // Main Component for the Q&A List section
@@ -52,7 +61,7 @@ const Question = ({ question, updateDisplay }) => {
   const classes = useStyles();
   const [answerCount, setAnswerCount] = useState(2);
   let totalAnswers = Object.values(question.answers).length;
-  
+
   // Update number of Answers displayed
   const updateAnswerCount = () => {
     setAnswerCount((prevCount) => (prevCount === 2 ? totalAnswers : 2));
@@ -85,13 +94,13 @@ const Question = ({ question, updateDisplay }) => {
           />
         </Box>
         <Box mx={1}>
-          <Typography className={classes.separator}>|</Typography>
+          <Typography color="primary">|</Typography>
         </Box>
         <Box mx={1}>
           <Report className="reported" questionID={question.question_id} />
         </Box>
         <Box mx={1}>
-          <Typography className={classes.separator}>|</Typography>
+          <Typography color="primary">|</Typography>
         </Box>
         <Box mx={1}>
           <AddAnswer
@@ -153,7 +162,9 @@ const Answers = ({ answer }) => {
         </Box>
 
         <Box mx={2}>
-          <Typography variant="caption" className={classes.separator}>|</Typography>
+          <Typography variant="caption" color="primary">
+            |
+          </Typography>
         </Box>
 
         <Box mx={1}>
@@ -161,12 +172,20 @@ const Answers = ({ answer }) => {
         </Box>
 
         <Box mx={2}>
-          <Typography variant="caption" className={classes.separator}>|</Typography>
+          <Typography variant="caption" color="primary">
+            |
+          </Typography>
         </Box>
 
         <Box mx={1}>
           <Report className="reported" answerID={answer.id} />
         </Box>
+      </Grid>
+
+      <Grid container item>
+        {answer.photos.map((photo, i) => 
+          <AddPhotos key={i} photo={photo} />
+        )}
       </Grid>
     </Grid>
   );

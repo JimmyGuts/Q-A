@@ -1,5 +1,15 @@
 import React, { useState } from "react";
-import { Button, Link, Grid, IconButton } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import {
+  Button,
+  Link,
+  Grid,
+  IconButton,
+  Card,
+  CardMedia,
+  CardActionArea,
+  Typography,
+} from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -7,8 +17,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import CloseIcon from "@material-ui/icons/Close";
-import {createAnswer} from "./RequestAPI.jsx";
-
+import { createAnswer } from "./RequestAPI.jsx";
 
 //  * Answer a Question Modal Form Elements/Details *
 //  Access: From the answer link on each question
@@ -44,7 +53,16 @@ import {createAnswer} from "./RequestAPI.jsx";
 //    d. field is invalid if any required field is blank or email is not in correct format
 //    e. images selected are invalid or unable to be uploaded
 
-const AddAnswer = ({questionID, updateDisplay }) => {
+const useStyles = makeStyles((theme) => ({
+  root: {
+    maxWidth: 80,
+    maxHeight: 80,
+    margin: "10px 10px",
+  },
+}));
+
+const AddAnswer = ({ questionID, updateDisplay }) => {
+  const classes = useStyles();
   // Functions to handle Modal Open, Close, Cancel
   const [open, setOpen] = useState(false);
 
@@ -64,6 +82,8 @@ const AddAnswer = ({questionID, updateDisplay }) => {
     updateName("");
     updateEmail("");
     updateBody("");
+    updatePhotos("");
+    enteringPhoto("");
     setErrors({});
   };
 
@@ -85,14 +105,23 @@ const AddAnswer = ({questionID, updateDisplay }) => {
       let answer = {
         name: name,
         email: email,
-        body: body
-      }
+        body: body,
+        photos: photos,
+      };
       // Submit Form Values to API Post request
       // Then reset forms and close modal
       createAnswer(questionID, answer)
-      .then(resetFields())
-      .then(handleClose())
-      .then(() => updateDisplay())
+        .then(resetFields())
+        .then(handleClose())
+        .then(() => updateDisplay());
+    }
+  };
+
+  // Functions for Photos
+  const handleAddPhoto = (newPhoto) => {
+    if (newPhoto) {
+      updatePhotos((prevPhotos) => [...prevPhotos, newPhoto]);
+      enteringPhoto("");
     }
   };
 
@@ -100,10 +129,12 @@ const AddAnswer = ({questionID, updateDisplay }) => {
   const [name, updateName] = useState("");
   const [email, updateEmail] = useState("");
   const [body, updateBody] = useState("");
+  const [photos, updatePhotos] = useState([]);
+  const [tempPhoto, enteringPhoto] = useState("");
   const [errors, setErrors] = useState({});
 
   return (
-    <div>
+    <React.Fragment>
       <Link
         id="openAddAnswer"
         variant="caption"
@@ -119,22 +150,26 @@ const AddAnswer = ({questionID, updateDisplay }) => {
         aria-labelledby="form-dialog-title"
       >
         <DialogTitle id="form-dialog-title">
-          <Grid container justify="flex-end" alignItems="flex-start">
-            <IconButton
-              id="closeIcon"
-              edge="end"
-              size="small"
-              color="secondary"
-              onClick={handleClose}
-              aria-label="close"
-            >
-              <CloseIcon />
-            </IconButton>
+          <Grid container>
+            <Grid container item xs={11}>
+              <Typography variant="h6">Add a Answer</Typography>
+            </Grid>
+            <Grid container xs={1}>
+              <IconButton
+                id="closeIcon"
+                edge="end"
+                size="small"
+                color="secondary"
+                onClick={handleClose}
+                aria-label="close"
+              >
+                <CloseIcon />
+              </IconButton>
+            </Grid>
           </Grid>
-          Add a Answer
         </DialogTitle>
         <DialogContent>
-          <DialogContentText>
+          <DialogContentText variant="body1">
             To add a answer to this question please enter your name and email
             address along with your answer.
           </DialogContentText>
@@ -192,6 +227,44 @@ const AddAnswer = ({questionID, updateDisplay }) => {
             inputProps={{ maxLength: 1000 }}
             placeholder="What is your answer to this question?"
           />
+          <Grid container item>
+            {photos
+              ? photos.map((photo, i) => {
+                  return (
+                    <Card key={i} className={classes.root}>
+                      <CardMedia component="img" src={photo}></CardMedia>
+                    </Card>
+                  );
+                })
+              : null}
+          </Grid>
+          <TextField
+            id={("standard-textarea", "photo")}
+            label="Photo URL"
+            fullWidth
+            multiline
+            value={tempPhoto}
+            defaultValue={tempPhoto}
+            onChange={(event) => {
+              enteringPhoto(event.target.value);
+            }}
+            // {...(errors.body && { error: true, helperText: errors.body })}
+            inputProps={{ maxLength: 1000 }}
+            placeholder="Enter your photo url?"
+            helperText={`${5 - photos.length} ${
+              photos.length === 4 ? "photo" : "photos"
+            } can be added`}
+          />
+          {photos.length < 5 ? (
+            <Button
+              onClick={() => handleAddPhoto(tempPhoto)}
+              variant="outlined"
+              color="primary"
+              component="span"
+            >
+              Upload
+            </Button>
+          ) : null}
         </DialogContent>
         <DialogActions>
           <Button id="cancelButton" onClick={handleCancel} color="inherit">
@@ -202,7 +275,7 @@ const AddAnswer = ({questionID, updateDisplay }) => {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </React.Fragment>
   );
 };
 
