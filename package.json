@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack -p",
-    "builddev": "webpack -d -w",
+    "build-dev": "webpack -d -w",
     "test": "jest --coverage",
+    "start-dev": "nodemon server.js",
     "start": "node server.js"
   },
   "repository": {
@@ -26,6 +27,7 @@
     "compression": "^1.7.4",
     "express": "^4.17.1",
     "moment": "^2.27.0",
+    "mongoose": "^5.10.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",

@@ -4,10 +4,12 @@ import axios from "axios";
 // *** API Requests Routes ***
 // ***************************
 
+const url = 'http://localhost:8080';
+
 // Get Question and Answers object
 const getProductQA = (product_id) => {
   return axios
-    .get(`http://52.26.193.201:3000/qa/${product_id}/`, {
+    .get(url + `/qa/${product_id}/`, {
       params: {
         product_id: product_id,
         count: 100,
@@ -24,7 +26,7 @@ const getProductQA = (product_id) => {
 //Post Question to API
 const createQuestion = (productID, question) => {
   return axios
-    .post(`http://52.26.193.201:3000/qa/${productID}`, {
+    .post(url + `/qa/${productID}`, {
       name: question.name,
       email: question.email,
       body: question.body,
