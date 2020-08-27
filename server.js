@@ -1,9 +1,6 @@
 const express = require("express");
 const compression = require("compression");
-const Questions = require("./database");
-const Question = Questions.Question;
-const Answer = Questions.Answer;
-const QAs = Questions.QAs;
+const { Question, Answer, QAs } = require('./database');
 
 const app = express();
 const Port = process.env.port || 8080;
@@ -288,9 +285,8 @@ app.get(`/qa/:product_id`, (req, res) => {
 });
 
 //Post Question to API - createQuestion
-app.post(`/qa/:product_id`, async (req, res) => {
+app.post(`/qa/:product_id`, (req, res) => {
   let product_id = req.params.product_id;
-  const productInfo = await QAs.findOne({ product_id: product_id });
   let name = req.body.name;
   let email = req.body.email;
   let bodyQ = req.body.body;
@@ -298,11 +294,17 @@ app.post(`/qa/:product_id`, async (req, res) => {
     question_id: 1,
     question_body: bodyQ,
     asker_name: name,
+    answers: {test: 'hello'},
   })
-  const question = Question.findOne({ question_id: 1})
-  productInfo.results.push(question);
+  .then( async () => {
+    const question = await Question.findOne({ question_id: 1});
+    await QAs.findOneAndUpdate({product_id: product_id}, {$push: {results: question}})
+  })
+  .catch((err) => {
+      console.log(err);
+  })
   res.status(201);
-  res.send(question);
+  res.send('Question Created');
 });
 
 //Post Answers to API - createAnswer
