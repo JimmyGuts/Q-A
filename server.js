@@ -1,11 +1,16 @@
 const express = require("express");
 const compression = require("compression");
-const axios = require("axios");
+const Questions = require("./database");
+const Question = Questions.Question;
+const Answer = Questions.Answer;
+const QAs = Questions.QAs;
 
 const app = express();
 const Port = process.env.port || 8080;
 
 app.use(compression());
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 
 // for modules
 app.use(express.static("public"));
@@ -269,73 +274,35 @@ const mockGetQAs = {
   ]
 };
 
-const mockGetAs = {
-  "question": "1",
-  "page": 0,
-  "count": 5,
-  "results": [
-      {
-          "answer_id": 5,
-          "body": "Something pretty soft but I can't be sure",
-          "date": "2018-01-04T00:00:00.000Z",
-          "answerer_name": "metslover",
-          "helpfulness": 10,
-          "photos": [
-              {
-                  "id": 1,
-                  "url": "https://images.unsplash.com/photo-1530519729491-aea5b51d1ee1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1651&q=80"
-              },
-              {
-                  "id": 2,
-                  "url": "https://images.unsplash.com/photo-1511127088257-53ccfcc769fa?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80"
-              },
-              {
-                  "id": 3,
-                  "url": "https://images.unsplash.com/photo-1500603720222-eb7a1f997356?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1653&q=80"
-              }
-          ]
-      },
-      {
-          "answer_id": 7,
-          "body": "Its the best! Seriously magic fabric",
-          "date": "2018-01-04T00:00:00.000Z",
-          "answerer_name": "metslover",
-          "helpfulness": 9,
-          "photos": []
-      },
-      {
-          "answer_id": 8,
-          "body": "DONT BUY IT! It's bad for the environment",
-          "date": "2018-01-04T00:00:00.000Z",
-          "answerer_name": "metslover",
-          "helpfulness": 8,
-          "photos": []
-      },
-      {
-          "answer_id": 95,
-          "body": "Supposedly suede, but I think its synthetic",
-          "date": "2018-12-04T00:00:00.000Z",
-          "answerer_name": "metslover",
-          "helpfulness": 3,
-          "photos": []
-      }
-  ]
-};
-
 // API Methods
 
 // Get Question and Answers object - getProductQA
 app.get(`/qa/:product_id`, (req, res) => {
+  let product_id = req.params.product_id;
+  QAs.create({
+    product_id: product_id,
+    results: [],
+  })
   res.status(200);
   res.send(mockGetQAs);
 });
 
 //Post Question to API - createQuestion
-app.post(`/qa/:product_id`, (req, res) => {
-  let name = req.name;
-  let email = req.email;
-  let body = req.body;
-  res.send(`${req.body}`);
+app.post(`/qa/:product_id`, async (req, res) => {
+  let product_id = req.params.product_id;
+  const productInfo = await QAs.findOne({ product_id: product_id });
+  let name = req.body.name;
+  let email = req.body.email;
+  let bodyQ = req.body.body;
+  Question.create({
+    question_id: 1,
+    question_body: bodyQ,
+    asker_name: name,
+  })
+  const question = Question.findOne({ question_id: 1})
+  productInfo.results.push(question);
+  res.status(201);
+  res.send(question);
 });
 
 //Post Answers to API - createAnswer

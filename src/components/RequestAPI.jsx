@@ -26,7 +26,7 @@ const getProductQA = (product_id) => {
 //Post Question to API
 const createQuestion = (productID, question) => {
   return axios
-    .post(url + `/qa/${productID}`, {
+    .post(url + `/qa/${productID}/`, {
       name: question.name,
       email: question.email,
       body: question.body,
