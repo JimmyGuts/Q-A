@@ -56,9 +56,12 @@ const Question = ({ question, updateDisplay }) => {
 
   // Function to Sort by seller then most helpful.
   useEffect(() => {
+
+
     let ordered = Object.entries(question.answers).sort(function (a, b) {
       return b[1].helpfulness - a[1].helpfulness;
     });
+
 
     let sellers = [];
     for (let i = ordered.length - 1; i >= 0; i--) {
@@ -69,6 +72,8 @@ const Question = ({ question, updateDisplay }) => {
     }
     let appliedSort = [...sellers, ...ordered];
     sortAnswers(appliedSort);
+
+
   }, []);
 
   let totalAnswers = sortedAnswers.length;
@@ -178,9 +183,9 @@ const Answers = ({ answer }) => {
               variant="caption"
               className={
                 (classes.answerDetail,
-                answer.answerer_name.toLowerCase() === "seller"
-                  ? classes.seller
-                  : null)
+                  answer.answerer_name.toLowerCase() === "seller"
+                    ? classes.seller
+                    : null)
               }
             >
               {answer.answerer_name}
