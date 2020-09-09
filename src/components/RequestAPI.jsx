@@ -5,6 +5,7 @@ import axios from "axios";
 // ***************************
 
 const url = 'http://localhost:8080';
+// const url = 'http://52.26.193.201:3000';
 
 // Get Question and Answers object
 const getProductQA = (product_id) => {
@@ -42,7 +43,7 @@ const createQuestion = (productID, question) => {
 //Post Answers to API
 const createAnswer = (questionID, answer) => {
   return axios
-    .post(`http://52.26.193.201:3000/qa/${questionID}/answers`, {
+    .post(url + `/qa/${questionID}/answers`, {
       name: answer.name,
       email: answer.email,
       body: answer.body,
@@ -59,7 +60,7 @@ const createAnswer = (questionID, answer) => {
 // Put to mark a Question Helpful
 const markQuestionHelpful = (question_id) => {
   return axios
-    .put(`http://52.26.193.201:3000/qa/question/${question_id}/helpful`)
+    .put(url + `/qa/question/${question_id}/helpful`)
     .catch((error) => {
       console.log(error);
     });
@@ -68,7 +69,7 @@ const markQuestionHelpful = (question_id) => {
 // Put to mark an Answer Helpful
 const markAnswerHelpful = (answer_id) => {
   return axios
-    .put(`http://52.26.193.201:3000/qa/answer/${answer_id}/helpful`)
+    .put(url + `/qa/answer/${answer_id}/helpful`)
     .catch((error) => {
       console.log(error);
     });
@@ -77,7 +78,7 @@ const markAnswerHelpful = (answer_id) => {
 // Put to Report a Question
 const reportQuestion = (question_id) => {
   return axios
-    .put(`http://52.26.193.201:3000/qa/question/${question_id}/report`)
+    .put(url + `/qa/question/${question_id}/report`)
     .catch((error) => {
       console.log(error);
     });
@@ -86,7 +87,7 @@ const reportQuestion = (question_id) => {
 // Put to Report an Answer
 const reportAnswer = (answer_id) => {
   return axios
-    .put(`http://52.26.193.201:3000/qa/answer/${answer_id}/report`)
+    .put(url + `/qa/answer/${answer_id}/report`)
     .catch((error) => {
       console.log(error);
     });

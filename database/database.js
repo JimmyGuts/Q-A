@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/QA', {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});
+const Schema = mongoose.Schema;
 
-
-const Question = mongoose.model('question', {
+const qSchema = new Schema ({
   product_id: { type: Number },
   question_id: { type: Number, required: true, unique: true },
   question_body: { type: String, required: true },
@@ -10,10 +10,12 @@ const Question = mongoose.model('question', {
   asker_name: { type: String, required: true },
   question_helpfulness: { type: Number, default: 0 },
   reported: { type: Number, default: 0 },
-  answers: { type: Object },
-});
+  answers: { type: Object, required: true, default: {} },
+}, { minimize: false} );
 
-const Answer = mongoose.model('answer', {
+const Question = mongoose.model('question', qSchema);
+
+const aSchema = new Schema ({
   product_id: { type: Number },
   question_id: { type: Number},
   id: { type: Number, required: true, unique: true, default: 1 },
@@ -25,10 +27,8 @@ const Answer = mongoose.model('answer', {
   photos: { type: Array },
 });
 
-const QAs = mongoose.model('qas', {
-  product_id: { type: Number, unique: true },
-  results: { type: Array },
-});
+const Answer = mongoose.model('answer', aSchema);
 
-module.exports= { Question, Answer, QAs };
+
+module.exports = { Question, Answer };
 

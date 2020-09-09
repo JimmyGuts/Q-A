@@ -1,6 +1,6 @@
 const express = require("express");
 const compression = require("compression");
-const { Question, Answer, QAs } = require('./database');
+const { Question, Answer } = require('./database/database');
 
 const app = express();
 const Port = process.env.port || 8080;
@@ -275,20 +275,23 @@ const mockGetQAs = {
 
 // Get Question and Answers object - getProductQA
 app.get(`/qa/:product_id`, async (req, res) => {
+    const startTime = Date.now();
     const product_id = req.params.product_id;
-    QAs.create({
+    let result = await Question.find({ product_id: product_id });
+    let QAObj = {
         product_id: product_id,
-        results: [],
-    })
-    //   const currentProduct = await QAs.findOne({product_id: product_id});
+        results: result,
+    }
     res.status(200);
-    res.send(mockGetQAs);
+    console.log('Page Loaded! Time Taken: ' + (Date.now() - startTime));
+    res.send(QAObj);
 });
 
 //Post Question to API - createQuestion
 app.post(`/qa/:product_id`, async (req, res) => {
+    const startTime = Date.now();
     const product_id = req.params.product_id;
-    const getTheID = await Question.find().limit(1).sort({ $natural: -1 });
+    let getTheID = await Question.find().sort({ question_id: -1 }).limit(1);
     let currentQID;
     if (getTheID.length > 0) {
         currentQID = getTheID[0].question_id + 1;
@@ -303,29 +306,23 @@ app.post(`/qa/:product_id`, async (req, res) => {
         question_id: currentQID,
         question_body: bodyQ,
         asker_name: name,
-        answers: {0: 0},
+        answers: {
+        },
     })
-        .then(async () => {
-            const question = await Question.findOne({ question_id: currentQID });
-            await QAs.findOneAndUpdate({ product_id: product_id }, { $push: { results: question } })
-        })
         .catch((err) => {
             console.log(err);
         })
     res.status(201);
-    res.send('Question Created');
+    console.log('Question Complete! Time Taken: ' + (Date.now() - startTime));
+    res.send('Question Created!');
 });
 
 //Post Answers to API - createAnswer
 app.post(`/qa/:question_id/answers`, async (req, res) => {
+    const startTime = Date.now();
     const question_id = req.params.question_id;
-    const getTheID = await Answer.find().limit(1).sort({ $natural: -1 });
-    let currentAID;
-    if (getTheID.length > 0) {
-        currentAID = getTheID[0].id + 1;
-    } else {
-        currentAID = 1;
-    }
+    const getAnswersID = await Answer.find().sort({ id: -1 }).limit(1);
+    const currentAID = getAnswersID[0].id + 1;
     const name = req.body.name;
     const email = req.body.email;
     const body = req.body.body;
@@ -341,30 +338,53 @@ app.post(`/qa/:question_id/answers`, async (req, res) => {
             const answer = await Answer.findOne({ id: currentAID });
             const question = await Question.findOne({ question_id: question_id });
             const product_id = await question.product_id;
-            await Question.updateOne({ question_id: question_id }, {$set: { ['answers.' + `"${currentAID}"`]: answer }});
-            await QAs.updateOne({ product_id: product_id, 'results.question_id': question_id}, {$set: { ['results.$.answers.' + `"${currentAID}"`] : answer }});
+            await Question.updateOne({ question_id: question_id }, { $set: { ['answers.' + `"${currentAID}"`]: answer } });
         })
-    res.send('Answer Created');
+    res.status(201)
+    console.log(('Answer Complete! Time Taken: ' + (Date.now() - startTime)));
+    res.send('Answer Created!');
 });
 
 // Put to mark a Question Helpful - markQuestionHelpful
-app.put(`/qa/question/:question_id/helpful`, (req, res) => {
-    res.send('Put to mark a Question Helpful Working!');
+app.put(`/qa/question/:question_id/helpful`, async (req, res) => {
+    const startTime = Date.now();
+    const question_id = req.params.question_id;
+    await Question.findOneAndUpdate({question_id: question_id}, {$inc: {'question_helpfulness': 1}});
+    console.log('Question Helpful Complete! Time Taken: ' + (Date.now() - startTime));
+    res.send('Question Marked as Helpful!');
 });
 
 // Put to mark an Answer Helpful - markAnswerHelpful
-app.put(`/qa/answer/:answer_id/helpful`, (req, res) => {
-    res.send('Put to mark an Answer Helpful Working!');
+app.put(`/qa/answer/:answer_id/helpful`, async (req, res) => {
+    const startTime = Date.now();
+    const answer_id = req.params.answer_id;
+    await Answer.findOneAndUpdate({id: answer_id}, {$inc: {'helpfulness': 1}});
+    const answer = await Answer.findOne({id: answer_id});
+    const question_id = answer.question_id;
+    await Question.findOneAndUpdate({question_id: question_id}, {$inc: {['answers.' + `"${answer_id}".` + 'helpfulness']: 1}})
+    console.log('Answer Helpful Complete! Time Taken: ' + (Date.now() - startTime));
+    res.send('Answer Marked as Helpful!');
 });
 
 // Put to Report a Question - reportQuestion
-app.put(`/qa/question/:question_id/report`, (req, res) => {
-    res.send('Put to Report a Question Working!');
+app.put(`/qa/question/:question_id/report`, async (req, res) => {
+    const startTime = Date.now();
+    const question_id = req.params.question_id;
+    await Question.findOneAndRemove({question_id: question_id});
+    console.log('Question Reported Complete! Time Taken: ' + (Date.now() - startTime));
+    res.send('Question Reported!');
 });
 
 // Put to Report an Answer - reportAnswer
-app.put(`/qa/answer/:answer_id/report`, (req, res) => {
-    res.send('Put to Report an Answer Working!');
+app.put(`/qa/answer/:answer_id/report`, async (req, res) => {
+    const startTime = Date.now();
+    const answer_id = req.params.answer_id;
+    const answer = await Answer.findOne({id: answer_id});
+    await Answer.findOneAndRemove({id: answer_id});
+    const question_id = answer.question_id;
+    await Question.findOneAndUpdate({question_id: question_id}, {$unset:{['answers.' + `"${answer_id}"`]: ""}})
+    console.log('Answer Reported Complete! Time Taken: ' + (Date.now() - startTime));
+    res.send('Answer Reported!');
 });
 
 

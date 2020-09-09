@@ -65,12 +65,16 @@ const App = ({ productID }) => {
         found = true;
       }
       for (let key in currentQuestion.answers) {
-        let currentAnswer = currentQuestion.answers[key];
-        if (
-          currentAnswer.body.toLowerCase().includes(query) ||
-          currentAnswer.answerer_name.toLowerCase().includes(query)
-        ) {
-          found = true;
+          let currentAnswer = currentQuestion.answers[key];
+          if ((currentAnswer.body) !== undefined){
+          if (
+            currentAnswer.body.toLowerCase().includes(query) ||
+            currentAnswer.answerer_name.toLowerCase().includes(query)
+          ) {
+            found = true;
+          }
+        } else {
+          continue;
         }
       }
       if (found) {
