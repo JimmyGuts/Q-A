@@ -64,12 +64,12 @@ const Question = ({ question, updateDisplay }) => {
 
 
     let sellers = [];
-    for (let i = ordered.length - 1; i >= 0; i--) {
-      if (ordered[i][1].answerer_name.toLowerCase() === "seller") {
-        sellers.push(ordered[i]);
-        ordered.splice(i, 1);
-      }
-    }
+    // for (let i = ordered.length - 1; i >= 0; i--) {
+    //   if (ordered[i][1].answerer_name.toLowerCase() === "seller") {
+    //     sellers.push(ordered[i]);
+    //     ordered.splice(i, 1);
+    //   }
+    // }
     let appliedSort = [...sellers, ...ordered];
     sortAnswers(appliedSort);
 
@@ -183,7 +183,8 @@ const Answers = ({ answer }) => {
               variant="caption"
               className={
                 (classes.answerDetail,
-                  answer.answerer_name.toLowerCase() === "seller"
+                  // comma at end of previous line
+                  answer.answerer_name
                     ? classes.seller
                     : null)
               }
@@ -211,9 +212,12 @@ const Answers = ({ answer }) => {
       </Grid>
 
       <Grid container item xs={12}>
-        {answer.photos.map((photo, i) => (
+        {answer.photos
+        ?<Grid container item xs={12}>{answer.photos.map((photo, i) => (
           <AddPhotos key={i} photo={photo} />
-        ))}
+        ))}</Grid>
+        :<div></div>
+        }
       </Grid>
     </Grid>
   );

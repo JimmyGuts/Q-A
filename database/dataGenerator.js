@@ -16,9 +16,9 @@ const lorem = new LoremIpsum({
 let fakeListFiller = (howMany) => {
   fs.appendFileSync('./data.json', '[');
   fs.appendFileSync('./dataA.json', '[');
-  let product_id = 1;
-  let question_id = 1;
-  let answer_id = 1;
+  let product_id = 4001007;
+  let question_id = 10000010;
+  let answer_id = 19999639;
   let start = Date.now();
   let counter = 0;
 
@@ -59,9 +59,9 @@ let fakeListFiller = (howMany) => {
           fakeAnswerObj[answer_id] = iterationAnswer;
           answer_id++;
           fs.appendFileSync('./dataA.json', JSON.stringify(iterationAnswer, null, 3));
-          if (j === randomizer - 1) {
+          if (j >= randomizer - 1) {
             if (isLast) {
-              continue;
+              break;
             } else {
               fs.appendFileSync('./dataA.json', ',');
             }
@@ -95,38 +95,45 @@ let fakeListFiller = (howMany) => {
     let makeQuestions = (howMany) => {
       let rando = (Math.floor(Math.random() * (3 - 0 + 1) + 1));
       for (let x = 0; x < rando; x++) {
-        if ((counter === howMany - 1) && (x === rando - 1)) {
+        counter++;
+        if ((counter >= howMany) && (x >= rando - 1)) {
           fs.appendFileSync('./data.json', JSON.stringify(fakeQuestion(question_id, true), null, 3));
         } else {
           fs.appendFileSync('./data.json', JSON.stringify(fakeQuestion(question_id, false), null, 3));
         }
         question_id++;
-        if (counter === howMany - 1) {
-          if (x === rando - 1) {
-            continue;
+
+        if (counter >= howMany) {
+          if (x >= rando - 1) {
+            break;
           } else {
             fs.appendFileSync('./data.json', ',');
           }
         } else {
           fs.appendFileSync('./data.json', ',');
         }
+
       }
-      counter++;
       product_id++;
     }
 
-    makeQuestions(howMany);
-    if (counter === howMany) {
+
+    if (counter >= howMany) {
       break;
+    } else {
+      makeQuestions(howMany);
     }
   }
   fs.appendFileSync('./data.json', ']');
   fs.appendFileSync('./dataA.json', ']');
   let timeTaken = Date.now() - start;
   console.log('Finished! Time Taken:', timeTaken)
+  console.log('Final Product ID: ', product_id)
+  console.log('Final Question ID: ', question_id)
+  console.log('Final Answer ID: ', answer_id)
 }
 
-fakeListFiller(2);
+fakeListFiller(1000000);
 
 
 //** mongoimport --db QA --collection questions --file /Users/jamesgutowski/Documents/GalvanizeThings/SDC/Questions-and-Answers/database/data.json --jsonArray **//
