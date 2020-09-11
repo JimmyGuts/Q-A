@@ -1,18 +1,18 @@
 config:
   target: "http://localhost:8080"
   phases:
-    # - duration: 60
-    #   arrivalRate: 1
-    #   name: 1 User
-    # - duration: 60
-    #   arrivalRate: 10
-    #   name: 10 Users
-    # - duration: 60
-    #   arrivalRate: 100
-    #   name: 100 Users
-    # - duration: 60
-    #   arrivalRate: 1000
-    #   name: 1000 Users
+    - duration: 60
+      arrivalRate: 1
+      name: 1 User
+    - duration: 60
+      arrivalRate: 10
+      name: 10 Users
+    - duration: 60
+      arrivalRate: 100
+      name: 100 Users
+    - duration: 60
+      arrivalRate: 1000
+      name: 1000 Users
   payload:
     -
       path: "./stressTestProd.csv"

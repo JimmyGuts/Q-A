@@ -6,3 +6,6 @@ database/data.js
 database/dataA.js
 newrelic.js
 newrelic_agent.log
+stressTestA.csv
+stressTestProd.csv
+stressTestQ.csv
