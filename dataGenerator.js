@@ -16,9 +16,9 @@ const lorem = new LoremIpsum({
 let fakeListFiller = (howMany) => {
   fs.appendFileSync('./data.json', '[');
   fs.appendFileSync('./dataA.json', '[');
-  let product_id = 4001007;
-  let question_id = 10000010;
-  let answer_id = 19999639;
+  let product_id = 1;
+  let question_id = 1;
+  let answer_id = 1;
   let start = Date.now();
   let counter = 0;
 
